@@ -61,7 +61,7 @@ app.get('/api/datas-ocupadas', async (req, res) => {
     result.rows.forEach(r => {
       let d = new Date(r.checkin + 'T12:00:00');
       const fim = new Date(r.checkout + 'T12:00:00');
-      while (d < fim) { datas.push(d.toISOString().split('T')[0]); d.setDate(d.getDate() + 1); }
+      while (d <= fim) { datas.push(d.toISOString().split('T')[0]); d.setDate(d.getDate() + 1); }
     });
     res.json({ datas });
   } catch (e) { res.status(500).json({ error: e.message }); }
