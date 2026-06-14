@@ -7,6 +7,8 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Georgia',serif;background:#0d1b3e;color:#fff;min-height:100vh}
+
+    /* NAVBAR */
     .navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:0.5px solid rgba(255,255,255,0.08);background:#0d1b3e;position:sticky;top:0;z-index:50}
     .nav-brand .fort{color:#e8a020;font-size:22px;font-weight:bold;letter-spacing:1px}
     .nav-brand .house{color:#5b9ee1;font-size:22px;font-weight:bold;letter-spacing:1px}
@@ -19,28 +21,25 @@
     .nav-admin-btn:hover{color:#e8a020;border-color:#e8a020}
     .nav-cta{background:#e8a020;color:#0d1b3e;border:none;padding:10px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif}
 
-    /* BANNER CAMPANHA PROFISSIONAL */
-    #campBanner{display:none;position:relative;overflow:hidden}
-    #campBanner.ativa{display:block}
-    .cb-bg{background:#0a1628;border-bottom:3px solid #e8a020;padding:0}
-    .cb-inner{display:flex;align-items:stretch;max-width:900px;margin:0 auto}
-    .cb-left{background:#e8a020;padding:20px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:140px;text-align:center;flex-shrink:0}
-    .cb-left-icon{font-size:28px;margin-bottom:4px}
-    .cb-left-label{font-family:sans-serif;font-size:10px;font-weight:bold;letter-spacing:2px;color:#0d1b3e;text-transform:uppercase}
-    .cb-left-sub{font-family:sans-serif;font-size:9px;color:rgba(13,27,62,0.6);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
-    .cb-center{flex:1;padding:20px 28px;border-right:0.5px solid rgba(255,255,255,0.08)}
-    .cb-tag{font-family:sans-serif;font-size:10px;color:#e8a020;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
-    .cb-title{font-size:22px;color:#fff;font-weight:normal;margin-bottom:6px;line-height:1.2}
-    .cb-desc{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
-    .cb-right{padding:20px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-width:200px;flex-shrink:0}
-    .cb-preco-label{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
-    .cb-preco-val{font-family:sans-serif;font-size:32px;font-weight:bold;color:#e8a020;line-height:1;margin-bottom:2px}
-    .cb-preco-tipo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:14px}
-    .cb-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:12px;font-weight:bold;letter-spacing:1.5px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%}
-    .cb-btn:hover{background:#f0b030}
-    .cb-close{position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,0.3);font-size:20px;cursor:pointer;line-height:1;z-index:2}
-    .cb-close:hover{color:#fff}
-    .cb-periodo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px}
+    /* BANNER PROMOÇÃO */
+    #promoBanner{display:none;position:relative}
+    #promoBanner.ativa{display:block}
+    .pb-bg{background:#0a1628;border-bottom:3px solid #e8a020}
+    .pb-inner{display:flex;align-items:stretch;max-width:960px;margin:0 auto}
+    .pb-left{background:#e8a020;padding:20px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:120px;text-align:center;flex-shrink:0}
+    .pb-left-icon{font-size:28px;margin-bottom:4px}
+    .pb-left-label{font-family:sans-serif;font-size:10px;font-weight:bold;letter-spacing:2px;color:#0d1b3e;text-transform:uppercase}
+    .pb-center{flex:1;padding:20px 28px;border-right:0.5px solid rgba(255,255,255,0.08)}
+    .pb-tag{font-family:sans-serif;font-size:10px;color:#e8a020;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+    .pb-title{font-size:22px;color:#fff;margin-bottom:6px;line-height:1.2}
+    .pb-desc{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
+    .pb-periodo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.35);margin-top:5px}
+    .pb-right{padding:20px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-width:200px;flex-shrink:0}
+    .pb-preco-label{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+    .pb-preco-val{font-family:sans-serif;font-size:32px;font-weight:bold;color:#e8a020;line-height:1;margin-bottom:2px}
+    .pb-preco-tipo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:14px}
+    .pb-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 22px;font-size:12px;font-weight:bold;letter-spacing:1.5px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%}
+    .pb-close{position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,0.3);font-size:20px;cursor:pointer;z-index:2}
 
     /* HERO */
     .hero{position:relative;min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:56px;text-align:center;overflow:hidden}
@@ -50,23 +49,26 @@
     .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,160,32,0.15);border:0.5px solid rgba(232,160,32,0.4);color:#e8a020;padding:6px 18px;border-radius:20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;font-family:sans-serif}
     .hero-badge::before{content:'';display:inline-block;width:6px;height:6px;background:#e8a020;border-radius:50%;animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .hero h1{font-size:44px;font-weight:normal;line-height:1.2;margin-bottom:14px;color:#ffffff}
+    .hero h1{font-size:44px;font-weight:normal;line-height:1.2;margin-bottom:14px;color:#fff}
     .hero h1 em{color:#e8a020;font-style:normal}
     .hero p{color:rgba(255,255,255,0.7);font-size:15px;max-width:500px;margin:0 auto 36px;line-height:1.8;font-family:sans-serif;font-weight:300}
     .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     .btn-primary{background:#e8a020;color:#0d1b3e;border:none;padding:15px 34px;font-size:13px;font-weight:bold;letter-spacing:2px;cursor:pointer;border-radius:2px;text-transform:uppercase;font-family:sans-serif}
     .btn-secondary{background:transparent;color:#fff;border:1.5px solid #fff;padding:15px 34px;font-size:13px;font-weight:bold;letter-spacing:2px;cursor:pointer;border-radius:2px;text-transform:uppercase;font-family:sans-serif}
 
+    /* FEATURES */
     .features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-bottom:0.5px solid rgba(255,255,255,0.06)}
     .feat{padding:32px 28px;background:#0d1b3e;text-align:center}
-    .feat-icon{width:44px;height:44px;border-radius:50%;border:0.5px solid rgba(232,160,32,0.35);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:#e8a020;font-size:20px}
+    .feat-icon{width:44px;height:44px;border-radius:50%;border:0.5px solid rgba(232,160,32,0.35);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:20px}
     .feat h3{font-size:15px;font-weight:normal;color:#fff;margin-bottom:8px}
-    .feat p{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;font-weight:300}
+    .feat p{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7}
 
+    /* DIVIDER */
     .divider{display:flex;align-items:center;gap:20px;padding:40px 40px 0;max-width:700px;margin:0 auto}
     .div-line{flex:1;height:0.5px;background:rgba(255,255,255,0.08)}
     .div-text{color:rgba(255,255,255,0.2);font-size:10px;letter-spacing:3px;text-transform:uppercase;white-space:nowrap;font-family:sans-serif}
 
+    /* CALENDÁRIO */
     .availability{padding:48px 40px;max-width:700px;margin:0 auto}
     .section-label{font-family:sans-serif;font-size:10px;letter-spacing:4px;color:#e8a020;text-transform:uppercase;margin-bottom:12px}
     .section-title{font-size:26px;font-weight:normal;margin-bottom:28px;color:#fff}
@@ -96,102 +98,113 @@
     .cal-result-text{font-family:sans-serif;font-size:13px;color:#e8a020;margin-bottom:12px;line-height:1.6}
     .cal-reserve-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;width:100%;text-transform:uppercase;font-family:sans-serif}
 
-    .pricing{padding:48px 40px;border-top:0.5px solid rgba(255,255,255,0.06);max-width:700px;margin:0 auto}
-    .price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .price-card{border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:24px 16px;text-align:center}
-    .price-card.featured{border-color:rgba(232,160,32,0.4);background:rgba(232,160,32,0.04)}
-    .price-tag{font-family:sans-serif;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:8px}
-    .price-season{font-size:15px;color:#fff;margin-bottom:4px}
-    .price-period{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:14px;line-height:1.6}
-    .price-val{font-size:26px;color:#e8a020;font-family:sans-serif;font-weight:300}
-    .price-val span{font-size:12px;color:rgba(255,255,255,0.3)}
-    .price-note{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.25);margin-top:6px}
+    /* QUADRO DE AVISOS */
+    .avisos-section{padding:48px 40px;border-top:0.5px solid rgba(255,255,255,0.06);max-width:700px;margin:0 auto}
+    .avisos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .aviso-card{border-radius:4px;padding:18px 20px;position:relative;overflow:hidden}
+    .aviso-card.ativa{background:rgba(232,160,32,0.06);border:1.5px solid rgba(232,160,32,0.35)}
+    .aviso-card.em_breve{background:rgba(91,158,225,0.05);border:1.5px solid rgba(91,158,225,0.25)}
+    .aviso-card.encerrada{background:rgba(255,255,255,0.02);border:0.5px solid rgba(255,255,255,0.08)}
+    .aviso-status{font-family:sans-serif;font-size:10px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;display:inline-flex;align-items:center;gap:6px}
+    .aviso-card.ativa .aviso-status{color:#e8a020}
+    .aviso-card.em_breve .aviso-status{color:#5b9ee1}
+    .aviso-card.encerrada .aviso-status{color:rgba(255,255,255,0.3)}
+    .aviso-status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%}
+    .aviso-card.ativa .aviso-status::before{background:#e8a020;animation:pulse 2s infinite}
+    .aviso-card.em_breve .aviso-status::before{background:#5b9ee1}
+    .aviso-card.encerrada .aviso-status::before{background:rgba(255,255,255,0.2)}
+    .aviso-titulo{font-size:16px;color:#fff;margin-bottom:4px}
+    .aviso-card.encerrada .aviso-titulo{color:rgba(255,255,255,0.4);text-decoration:line-through;text-decoration-color:rgba(255,255,255,0.15)}
+    .aviso-periodo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:10px}
+    .aviso-preco{font-family:sans-serif;font-size:18px;font-weight:bold;color:#e8a020}
+    .aviso-card.encerrada .aviso-preco{color:rgba(255,255,255,0.2)}
+    .aviso-tipo{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.3)}
+    .aviso-desc{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;line-height:1.5}
+    .aviso-reservar{margin-top:12px;background:#e8a020;color:#0d1b3e;border:none;padding:8px 16px;font-size:11px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase}
+    .aviso-encerrado-tag{position:absolute;top:12px;right:12px;font-family:sans-serif;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.2);text-transform:uppercase;border:0.5px solid rgba(255,255,255,0.1);padding:2px 8px;border-radius:2px}
 
+    /* FOOTER */
     .footer-strip{padding:24px 40px;border-top:0.5px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
-    .footer-wpp{display:flex;align-items:center;gap:8px;background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.25);padding:10px 18px;border-radius:2px;cursor:pointer;font-family:sans-serif;font-size:12px;color:#25D366;letter-spacing:0.5px;text-decoration:none}
+    .footer-wpp{display:flex;align-items:center;gap:8px;background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.25);padding:10px 18px;border-radius:2px;font-family:sans-serif;font-size:12px;color:#25D366;letter-spacing:0.5px;text-decoration:none}
 
     /* ADMIN */
-    #adminOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;overflow-y:auto;padding:32px 16px}
+    #adminOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;overflow-y:auto;padding:32px 16px}
     #adminOverlay.open{display:block}
-    .admin-box{background:#0d1b3e;border:0.5px solid rgba(255,255,255,0.12);border-radius:6px;max-width:700px;margin:0 auto;padding:28px}
+    .admin-box{background:#0d1b3e;border:0.5px solid rgba(255,255,255,0.12);border-radius:6px;max-width:720px;margin:0 auto;padding:28px}
     .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
     .admin-header h2{font-size:18px;font-weight:normal;color:#e8a020}
-    .admin-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:24px;cursor:pointer;line-height:1}
-    .admin-tabs{display:flex;margin-bottom:24px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
-    .atab{padding:10px 20px;font-family:sans-serif;font-size:13px;cursor:pointer;color:rgba(255,255,255,0.4);border:none;border-bottom:2px solid transparent;background:none}
+    .admin-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:24px;cursor:pointer}
+    .admin-tabs{display:flex;margin-bottom:24px;border-bottom:0.5px solid rgba(255,255,255,0.08);overflow-x:auto}
+    .atab{padding:10px 18px;font-family:sans-serif;font-size:13px;cursor:pointer;color:rgba(255,255,255,0.4);border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap}
     .atab.active{color:#e8a020;border-bottom-color:#e8a020}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
     .form-group{display:flex;flex-direction:column;gap:6px}
     .form-group label{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase}
     .form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 12px;color:#fff;font-family:sans-serif;font-size:13px;width:100%}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#e8a020}
+    .form-group input:focus,.form-group select:focus{outline:none;border-color:#e8a020}
     .form-group select option{background:#0d1b3e}
-    .form-group textarea{resize:vertical;min-height:64px}
+    .form-group textarea{resize:vertical;min-height:60px}
     .save-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%;margin-top:16px}
     .cancel-btn{background:transparent;color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.15);padding:10px 20px;font-size:12px;cursor:pointer;border-radius:2px;font-family:sans-serif;width:100%;margin-top:8px}
     .res-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .res-info{flex:1}
-    .res-name{font-size:14px;color:#fff;margin-bottom:3px}
+    .res-info{flex:1}.res-name{font-size:14px;color:#fff;margin-bottom:3px}
     .res-meta{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6}
     .badge{font-family:sans-serif;font-size:10px;padding:3px 10px;border-radius:10px;white-space:nowrap;flex-shrink:0}
     .badge-manual{background:rgba(232,160,32,0.15);color:#e8a020;border:0.5px solid rgba(232,160,32,0.3)}
     .badge-online{background:rgba(91,158,225,0.15);color:#5b9ee1;border:0.5px solid rgba(91,158,225,0.3)}
     .del-btn{background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;font-size:18px;line-height:1;flex-shrink:0;padding:0 4px}
     .del-btn:hover{color:#e55}
-    .camp-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:14px;margin-bottom:8px}
-    .camp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-    .camp-name{font-size:14px;color:#fff}
-    .camp-actions{display:flex;gap:8px;align-items:center}
-    .toggle-btn{background:none;border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:4px 12px;border-radius:2px;cursor:pointer;font-family:sans-serif;font-size:11px}
-    .toggle-btn.on{border-color:rgba(232,160,32,0.5);color:#e8a020;background:rgba(232,160,32,0.08)}
-    .camp-meta{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.35)}
+    .promo-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:14px;margin-bottom:8px}
+    .promo-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+    .promo-name{font-size:14px;color:#fff;margin-bottom:3px}
+    .promo-meta{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.35)}
+    .promo-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+    .status-btn{border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);padding:4px 10px;border-radius:2px;cursor:pointer;font-family:sans-serif;font-size:10px;background:none;white-space:nowrap}
+    .status-btn.ativa{border-color:rgba(232,160,32,0.4);color:#e8a020;background:rgba(232,160,32,0.08)}
+    .status-btn.em_breve{border-color:rgba(91,158,225,0.4);color:#5b9ee1;background:rgba(91,158,225,0.08)}
+    .status-btn.encerrada{border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.25)}
     .msg-ok{background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.25);color:#25D366;font-family:sans-serif;font-size:12px;padding:10px 14px;border-radius:2px;margin-bottom:12px;display:none}
     .msg-ok.show{display:block}
     .msg-err{background:rgba(220,50,50,0.1);border:0.5px solid rgba(220,50,50,0.3);color:#f66;font-family:sans-serif;font-size:12px;padding:10px 14px;border-radius:2px;margin-bottom:12px;display:none}
     .msg-err.show{display:block}
     .empty-msg{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.3);text-align:center;padding:24px}
     .loading{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:20px}
+    .sec-sep{border-top:0.5px solid rgba(255,255,255,0.08);margin-top:20px;padding-top:20px}
     .hint{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.25);margin-top:6px;line-height:1.5}
 
     @media(max-width:600px){
-      .navbar{padding:14px 16px}
-      .nav-links{display:none}
-      .hero h1{font-size:28px}
-      .features{grid-template-columns:1fr}
-      .price-cards{grid-template-columns:1fr}
-      .availability,.pricing{padding:32px 16px}
-      .form-row{grid-template-columns:1fr}
-      .divider{padding:32px 16px 0}
+      .navbar{padding:14px 16px}.nav-links{display:none}
+      .hero h1{font-size:28px}.features{grid-template-columns:1fr}
+      .avisos-grid{grid-template-columns:1fr}
+      .availability,.avisos-section{padding:32px 16px}
+      .form-row{grid-template-columns:1fr}.divider{padding:32px 16px 0}
       .footer-strip{flex-direction:column;gap:16px;text-align:center}
-      .cb-inner{flex-direction:column}
-      .cb-left{flex-direction:row;gap:10px;min-width:unset;padding:14px 20px}
-      .cb-right{min-width:unset;padding:14px 20px}
+      .pb-inner{flex-direction:column}.pb-right{min-width:unset;padding:14px 20px}
     }
   </style>
 </head>
 <body>
 
-<!-- BANNER CAMPANHA PROFISSIONAL -->
-<div id="campBanner">
-  <div class="cb-bg">
-    <button class="cb-close" onclick="fecharBanner()" title="Fechar">×</button>
-    <div class="cb-inner">
-      <div class="cb-left">
-        <div class="cb-left-icon">🏖️</div>
-        <div class="cb-left-label">Oferta</div>
-        <div class="cb-left-sub">especial</div>
+<!-- BANNER PROMOÇÃO ATIVA -->
+<div id="promoBanner">
+  <button class="pb-close" onclick="fecharBanner()">×</button>
+  <div class="pb-bg">
+    <div class="pb-inner">
+      <div class="pb-left">
+        <div class="pb-left-icon">🏖️</div>
+        <div class="pb-left-label">Promoção</div>
       </div>
-      <div class="cb-center">
-        <div class="cb-tag">Promoção limitada</div>
-        <div class="cb-title" id="cbTitle"></div>
-        <div class="cb-desc" id="cbDesc"></div>
-        <div class="cb-periodo" id="cbPeriodo"></div>
+      <div class="pb-center">
+        <div class="pb-tag">Oferta por tempo limitado</div>
+        <div class="pb-title" id="pbTitle"></div>
+        <div class="pb-desc" id="pbDesc"></div>
+        <div class="pb-periodo" id="pbPeriodo"></div>
       </div>
-      <div class="cb-right">
-        <div class="cb-preco-label">A partir de</div>
-        <div class="cb-preco-val" id="cbPrecoVal"></div>
-        <div class="cb-preco-tipo" id="cbPrecoTipo"></div>
-        <button class="cb-btn" onclick="scrollCal()">Quero reservar agora →</button>
+      <div class="pb-right">
+        <div class="pb-preco-label">A partir de</div>
+        <div class="pb-preco-val" id="pbPrecoVal"></div>
+        <div class="pb-preco-tipo" id="pbPrecoTipo"></div>
+        <button class="pb-btn" onclick="scrollCal()">Quero reservar agora →</button>
       </div>
     </div>
   </div>
@@ -206,7 +219,7 @@
   <div class="nav-links">
     <a onclick="window.scrollTo({top:0,behavior:'smooth'})">Início</a>
     <a onclick="scrollCal()">Disponibilidade</a>
-    <a onclick="document.querySelector('.pricing').scrollIntoView({behavior:'smooth'})">Preços</a>
+    <a onclick="document.getElementById('secAvisos').scrollIntoView({behavior:'smooth'})">Promoções</a>
   </div>
   <div class="nav-right">
     <button class="nav-admin-btn" onclick="abrirAdmin()">🔒 Admin</button>
@@ -224,19 +237,20 @@
     <p>Uma casa de praia exclusiva, pensada para momentos inesquecíveis com quem você ama. Conforto, tranquilidade e o mar ao seu alcance.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="scrollCal()">Verificar disponibilidade</button>
-      <button class="btn-secondary" onclick="document.querySelector('.pricing').scrollIntoView({behavior:'smooth'})">Saiba mais</button>
+      <button class="btn-secondary" onclick="document.getElementById('secAvisos').scrollIntoView({behavior:'smooth'})">Ver promoções</button>
     </div>
   </div>
 </section>
 
+<!-- FEATURES -->
 <div class="features">
   <div class="feat"><div class="feat-icon">📅</div><h3>Reserva online</h3><p>Veja as datas disponíveis e reserve de forma rápida e segura, sem burocracia.</p></div>
   <div class="feat"><div class="feat-icon">🔒</div><h3>Pagamento seguro</h3><p>Apenas 20% de entrada para confirmar. O restante é pago na entrega das chaves.</p></div>
   <div class="feat"><div class="feat-icon">💬</div><h3>Suporte direto</h3><p>Atendimento pelo WhatsApp. Confirme sua reserva direto com o proprietário.</p></div>
 </div>
 
+<!-- CALENDÁRIO -->
 <div class="divider"><div class="div-line"></div><div class="div-text">Disponibilidade</div><div class="div-line"></div></div>
-
 <section class="availability" id="secCal">
   <div class="section-label">Calendário</div>
   <div class="section-title">Escolha suas datas</div>
@@ -261,37 +275,17 @@
   </div>
 </section>
 
-<div class="divider"><div class="div-line"></div><div class="div-text">Temporadas</div><div class="div-line"></div></div>
-
-<section class="pricing">
-  <div class="section-label">Preços</div>
-  <div class="section-title">Tarifas por temporada</div>
-  <div class="price-cards">
-    <div class="price-card">
-      <div class="price-tag">Baixa temporada</div>
-      <div class="price-season">Tranquilidade</div>
-      <div class="price-period">Agosto · Outubro · Novembro</div>
-      <div class="price-val">R$ 180 <span>/ noite</span></div>
-      <div class="price-note">Mín. 2 diárias · Entrada 20%</div>
-    </div>
-    <div class="price-card">
-      <div class="price-tag">Média temporada</div>
-      <div class="price-season">Equilíbrio</div>
-      <div class="price-period">Março a Junho · Setembro</div>
-      <div class="price-val">R$ 250 <span>/ noite</span></div>
-      <div class="price-note">Mín. 2 diárias · Entrada 20%</div>
-    </div>
-    <div class="price-card featured">
-      <div class="price-tag" style="color:#e8a020">Alta temporada</div>
-      <div class="price-season">Verão & Férias</div>
-      <div class="price-period">Dezembro a Fevereiro · Julho</div>
-      <div class="price-val">R$ 350 <span>/ noite</span></div>
-      <div class="price-note">Mín. 3 diárias · Entrada 20%</div>
-    </div>
+<!-- QUADRO DE AVISOS / PROMOÇÕES -->
+<div class="divider"><div class="div-line"></div><div class="div-text">Promoções</div><div class="div-line"></div></div>
+<section class="avisos-section" id="secAvisos">
+  <div class="section-label">Quadro de avisos</div>
+  <div class="section-title">Promoções e ofertas</div>
+  <div class="avisos-grid" id="avisosGrid">
+    <div class="loading">Carregando promoções...</div>
   </div>
-  <p style="font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.2);margin-top:16px;text-align:center">Valores em reais (BRL). O restante do pagamento é realizado na entrega das chaves.</p>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer-strip">
   <div>
     <div style="font-family:'Georgia',serif;font-size:18px"><span style="color:#e8a020">fort</span><span style="color:#5b9ee1">house</span></div>
@@ -306,6 +300,8 @@
 <!-- ADMIN OVERLAY -->
 <div id="adminOverlay">
   <div class="admin-box">
+
+    <!-- LOGIN -->
     <div id="adminLogin">
       <div class="admin-header">
         <h2>🔒 Painel administrativo</h2>
@@ -319,6 +315,7 @@
       </div>
     </div>
 
+    <!-- PAINEL -->
     <div id="adminPanel" style="display:none">
       <div class="admin-header">
         <h2>⚙️ Painel administrativo</h2>
@@ -327,14 +324,16 @@
       <div class="admin-tabs">
         <button class="atab active" onclick="switchTab('reservas')">Reservas</button>
         <button class="atab" onclick="switchTab('nova')">+ Nova reserva</button>
-        <button class="atab" onclick="switchTab('campanhas')">Campanhas</button>
+        <button class="atab" onclick="switchTab('promocoes')">Promoções</button>
       </div>
 
+      <!-- ABA RESERVAS -->
       <div id="tabReservas">
         <div class="msg-ok" id="msgResOk">✓ Reserva salva com sucesso!</div>
         <div id="resList"><div class="loading">Carregando...</div></div>
       </div>
 
+      <!-- ABA NOVA RESERVA -->
       <div id="tabNova" style="display:none">
         <div class="msg-err" id="msgResErr"></div>
         <div class="form-row">
@@ -349,71 +348,62 @@
           <div class="form-group"><label>Check-in *</label><input type="date" id="nIn"></div>
           <div class="form-group"><label>Check-out *</label><input type="date" id="nOut"></div>
         </div>
-        <div class="form-group" style="margin-bottom:12px">
-          <label>Observações</label>
-          <textarea id="nObs" placeholder="Ex: pagamento antecipado, chave com vizinho..."></textarea>
-        </div>
+        <div class="form-group" style="margin-bottom:0"><label>Observações</label><textarea id="nObs" placeholder="Ex: pagamento antecipado, chave com vizinho..."></textarea></div>
         <button class="save-btn" onclick="salvarReserva()">💾 Salvar reserva</button>
         <button class="cancel-btn" onclick="switchTab('reservas')">Cancelar</button>
       </div>
 
-      <div id="tabCampanhas" style="display:none">
-        <div class="msg-ok" id="msgCampOk">✓ Campanha publicada com sucesso!</div>
-        <div id="campList"><div class="loading">Carregando...</div></div>
-        <div style="border-top:0.5px solid rgba(255,255,255,0.08);margin-top:20px;padding-top:20px">
-          <p style="font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:14px">✦ Nova campanha</p>
+      <!-- ABA PROMOÇÕES -->
+      <div id="tabPromocoes" style="display:none">
+        <div class="msg-ok" id="msgPromoOk">✓ Promoção salva!</div>
+        <div id="promoList"><div class="loading">Carregando...</div></div>
+
+        <div class="sec-sep">
+          <p style="font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:14px">✦ Nova promoção</p>
           <div class="form-row">
-            <div class="form-group">
-              <label>Título da campanha *</label>
-              <input type="text" id="cTitulo" placeholder="Ex: Carnaval 2027">
-            </div>
-            <div class="form-group">
-              <label>Período da oferta</label>
-              <input type="text" id="cPeriodo" placeholder="Ex: 05/02 a 10/02/2027">
-            </div>
+            <div class="form-group"><label>Título *</label><input type="text" id="pTitulo" placeholder="Ex: Carnaval 2027"></div>
+            <div class="form-group"><label>Período</label><input type="text" id="pPeriodo" placeholder="Ex: 28/02 a 05/03/2027"></div>
           </div>
           <div class="form-row">
-            <div class="form-group">
-              <label>Valor *</label>
-              <input type="text" id="cPreco" placeholder="Ex: R$ 4.500">
-            </div>
-            <div class="form-group">
-              <label>Tipo do valor *</label>
-              <select id="cTipo">
+            <div class="form-group"><label>Valor *</label><input type="text" id="pPreco" placeholder="Ex: R$ 4.500"></div>
+            <div class="form-group"><label>Tipo do valor *</label>
+              <select id="pTipo">
                 <option value="por noite">Por noite</option>
                 <option value="por fim de semana">Por fim de semana</option>
                 <option value="pacote completo">Pacote completo</option>
                 <option value="por pessoa">Por pessoa</option>
-                <option value="diária">Por diária</option>
+                <option value="por diária">Por diária</option>
               </select>
             </div>
           </div>
-          <div class="form-group" style="margin-bottom:4px">
-            <label>Descrição da oferta</label>
-            <input type="text" id="cDesc" placeholder="Ex: Inclui 5 noites, estacionamento e acesso à praia privativa">
+          <div class="form-row">
+            <div class="form-group"><label>Descrição</label><input type="text" id="pDesc" placeholder="Ex: Inclui 5 noites, estacionamento e acesso à praia"></div>
+            <div class="form-group"><label>Status inicial</label>
+              <select id="pStatus">
+                <option value="ativa">🟡 Ativa — aparece no banner e no quadro</option>
+                <option value="em_breve">🔵 Em breve — aparece no quadro</option>
+                <option value="encerrada">⚫ Encerrada — aparece como encerrada</option>
+              </select>
+            </div>
           </div>
-          <p class="hint">💡 A campanha aparece em destaque no topo do site assim que publicada. Você pode ativar/desativar quando quiser.</p>
-          <button class="save-btn" onclick="salvarCamp()">📢 Publicar campanha</button>
+          <p class="hint">💡 Promoções <strong>ativas</strong> aparecem no banner do topo e no quadro. <strong>Em breve</strong> só aparece no quadro. <strong>Encerradas</strong> ficam no quadro riscadas, mostrando o histórico aos visitantes.</p>
+          <button class="save-btn" onclick="salvarPromo()">📢 Publicar promoção</button>
         </div>
       </div>
+
     </div>
   </div>
 </div>
 
 <script>
-const API = '';
-const WPP = '5587981773054';
-const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-let cy, cm, s1=null, s2=null, datasOcupadas=[], admHeaders={};
+const API='', WPP='5587981773054';
+const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let cy,cm,s1=null,s2=null,datasOcupadas=[],admHeaders={};
 
-function initCal(){
-  const h=new Date(); cy=h.getFullYear(); cm=h.getMonth();
-  carregarDatas().then(render);
-}
+function initCal(){ const h=new Date(); cy=h.getFullYear(); cm=h.getMonth(); carregarDatas().then(render); }
 
 async function carregarDatas(){
-  try{ const r=await fetch(API+'/api/datas-ocupadas'); const d=await r.json(); datasOcupadas=d.datas||[]; }
-  catch(e){ datasOcupadas=[]; }
+  try{ const r=await fetch(API+'/api/datas-ocupadas'); const d=await r.json(); datasOcupadas=d.datas||[]; }catch(e){ datasOcupadas=[]; }
 }
 
 function isOcc(y,m,d){ return datasOcupadas.includes(`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`); }
@@ -427,15 +417,13 @@ function render(){
   let html='';
   for(let i=0;i<first;i++) html+='<div class="mday empty"></div>';
   for(let d=1;d<=days;d++){
-    const occ=isOcc(cy,cm,d), past=isPast(cy,cm,d);
+    const occ=isOcc(cy,cm,d),past=isPast(cy,cm,d);
     const tod=h.getFullYear()===cy&&h.getMonth()===cm&&h.getDate()===d;
     const sel=(s1&&s1[0]===cy&&s1[1]===cm&&s1[2]===d)||(s2&&s2[0]===cy&&s2[1]===cm&&s2[2]===d);
     let ir=false;
-    if(s1&&s2){const dd=new Date(cy,cm,d); ir=dd>new Date(s1[0],s1[1],s1[2])&&dd<new Date(s2[0],s2[1],s2[2]);}
+    if(s1&&s2){const dd=new Date(cy,cm,d);ir=dd>new Date(s1[0],s1[1],s1[2])&&dd<new Date(s2[0],s2[1],s2[2]);}
     let cls='mday';
-    if(occ) cls+=' occ';
-    else if(past) cls+=' past';
-    else if(sel||ir) cls+=sel?' sel':' in-range';
+    if(occ) cls+=' occ'; else if(past) cls+=' past'; else if(sel) cls+=' sel'; else if(ir) cls+=' in-range';
     if(tod) cls+=' today-mark';
     html+=`<div class="${cls}" onclick="pickDay(${cy},${cm},${d})">${occ?'Res.':d}</div>`;
   }
@@ -451,12 +439,12 @@ function pickDay(y,m,d){
 }
 
 function updateInfo(){
-  const info=document.getElementById('calInfo'), res=document.getElementById('calRes'), txt=document.getElementById('calResText');
+  const info=document.getElementById('calInfo'),res=document.getElementById('calRes'),txt=document.getElementById('calResText');
   if(!s1){info.textContent='Selecione a data de check-in no calendário acima.';info.classList.add('show');res.classList.remove('show');return;}
   if(!s2){info.textContent=`Check-in: ${fmt(s1)} — Agora selecione a data de saída.`;info.classList.add('show');res.classList.remove('show');return;}
   info.classList.remove('show');
   const a=new Date(s1[0],s1[1],s1[2]),b=new Date(s2[0],s2[1],s2[2]);
-  const n=Math.round((b-a)/86400000), total=n*250, ent=Math.round(total*.2);
+  const n=Math.round((b-a)/86400000),total=n*250,ent=Math.round(total*.2);
   txt.innerHTML=`<strong style="color:#fff">Check-in:</strong> ${fmt(s1)} &nbsp;→&nbsp; <strong style="color:#fff">Check-out:</strong> ${fmt(s2)}<br>${n} noite${n>1?'s':''} &nbsp;·&nbsp; Total estimado: <strong>R$ ${total.toLocaleString('pt-BR')}</strong><br>Entrada (20%): <strong>R$ ${ent.toLocaleString('pt-BR')}</strong>`;
   res.classList.add('show');
 }
@@ -467,29 +455,52 @@ function scrollCal(){ document.getElementById('secCal').scrollIntoView({behavior
 function abrirWpp(){
   if(!s1||!s2) return;
   const a=new Date(s1[0],s1[1],s1[2]),b=new Date(s2[0],s2[1],s2[2]);
-  const n=Math.round((b-a)/86400000), total=n*250, ent=Math.round(total*.2);
+  const n=Math.round((b-a)/86400000),total=n*250,ent=Math.round(total*.2);
   const msg=encodeURIComponent(`Olá! Tenho interesse em reservar a *Forthouse Casa de Praia* na Ilha de Itamaracá.\n\n📅 *Check-in:* ${fmt(s1)}\n📅 *Check-out:* ${fmt(s2)}\n🌙 *Noites:* ${n}\n💰 *Total estimado:* R$ ${total.toLocaleString('pt-BR')}\n💳 *Entrada (20%):* R$ ${ent.toLocaleString('pt-BR')}\n\nAguardo confirmação para concluir a reserva!`);
   window.open(`https://wa.me/${WPP}?text=${msg}`,'_blank');
 }
 
-async function carregarCampanha(){
+// ── PROMOÇÕES públicas ────────────────────────────────────────────────────────
+async function carregarPromoPublic(){
   try{
-    const r=await fetch(API+'/api/campanhas/ativas'); const d=await r.json();
-    if(d.campanha) mostrarBanner(d.campanha);
-  }catch(e){}
+    // Banner: promoção ativa
+    const rb=await fetch(API+'/api/promocoes/ativa'); const db=await rb.json();
+    if(db.promocao) mostrarBanner(db.promocao); else document.getElementById('promoBanner').classList.remove('ativa');
+
+    // Quadro de avisos: todas
+    const rp=await fetch(API+'/api/promocoes'); const dp=await rp.json();
+    renderAvisos(dp.promocoes||[]);
+  }catch(e){ document.getElementById('avisosGrid').innerHTML='<div class="empty-msg">Nenhuma promoção disponível no momento.</div>'; }
 }
 
-function mostrarBanner(c){
-  document.getElementById('cbTitle').textContent=c.titulo;
-  document.getElementById('cbDesc').textContent=c.descricao||'';
-  document.getElementById('cbPeriodo').textContent=c.periodo?'📆 '+c.periodo:'';
-  document.getElementById('cbPrecoVal').textContent=c.preco||'';
-  document.getElementById('cbPrecoTipo').textContent=c.tipo_preco||'';
-  document.getElementById('campBanner').classList.add('ativa');
+function mostrarBanner(p){
+  document.getElementById('pbTitle').textContent=p.titulo;
+  document.getElementById('pbDesc').textContent=p.descricao||'';
+  document.getElementById('pbPeriodo').textContent=p.periodo?'📆 '+p.periodo:'';
+  document.getElementById('pbPrecoVal').textContent=p.preco||'';
+  document.getElementById('pbPrecoTipo').textContent=p.tipo_preco||'';
+  document.getElementById('promoBanner').classList.add('ativa');
+}
+function fecharBanner(){ document.getElementById('promoBanner').classList.remove('ativa'); }
+
+function renderAvisos(promos){
+  const el=document.getElementById('avisosGrid');
+  if(!promos.length){ el.innerHTML='<div class="empty-msg" style="grid-column:1/-1">Nenhuma promoção cadastrada ainda.</div>'; return; }
+  const statusLabel={ ativa:'🟡 Ativa agora', em_breve:'🔵 Em breve', encerrada:'⚫ Encerrada' };
+  el.innerHTML=promos.map(p=>`
+    <div class="aviso-card ${p.status}">
+      ${p.status==='encerrada'?'<div class="aviso-encerrado-tag">Encerrada</div>':''}
+      <div class="aviso-status">${statusLabel[p.status]||p.status}</div>
+      <div class="aviso-titulo">${p.titulo}</div>
+      ${p.periodo?`<div class="aviso-periodo">📆 ${p.periodo}</div>`:''}
+      <div class="aviso-preco">${p.preco}</div>
+      <div class="aviso-tipo">${p.tipo_preco||''}</div>
+      ${p.descricao?`<div class="aviso-desc">${p.descricao}</div>`:''}
+      ${p.status==='ativa'?`<button class="aviso-reservar" onclick="scrollCal()">Reservar agora →</button>`:''}
+    </div>`).join('');
 }
 
-function fecharBanner(){ document.getElementById('campBanner').classList.remove('ativa'); }
-
+// ── ADMIN ─────────────────────────────────────────────────────────────────────
 function abrirAdmin(){ document.getElementById('adminOverlay').classList.add('open'); }
 function fecharAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
 
@@ -498,22 +509,22 @@ async function loginAdm(){
   const err=document.getElementById('loginErr'); err.classList.remove('show');
   try{
     const r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user,pass})});
-    if(r.ok){ admHeaders={user,pass}; document.getElementById('adminLogin').style.display='none'; document.getElementById('adminPanel').style.display='block'; carregarReservas(); carregarCampanhasAdm(); }
+    if(r.ok){ admHeaders={user,pass}; document.getElementById('adminLogin').style.display='none'; document.getElementById('adminPanel').style.display='block'; carregarReservas(); }
     else err.classList.add('show');
   }catch(e){ err.textContent='Erro de conexão.'; err.classList.add('show'); }
 }
 
 function switchTab(t){
-  ['reservas','nova','campanhas'].forEach(x=>{ const el=document.getElementById('tab'+x.charAt(0).toUpperCase()+x.slice(1)); if(el) el.style.display=x===t?'block':'none'; });
-  document.querySelectorAll('.atab').forEach((el,i)=>el.classList.toggle('active',['reservas','nova','campanhas'][i]===t));
+  ['reservas','nova','promocoes'].forEach(x=>{ const el=document.getElementById('tab'+x.charAt(0).toUpperCase()+x.slice(1)); if(el) el.style.display=x===t?'block':'none'; });
+  document.querySelectorAll('.atab').forEach((el,i)=>el.classList.toggle('active',['reservas','nova','promocoes'][i]===t));
   if(t==='reservas') carregarReservas();
-  if(t==='campanhas') carregarCampanhasAdm();
+  if(t==='promocoes') carregarPromosAdm();
 }
 
 function fmtDate(s){ if(!s) return '—'; const p=s.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; }
 
 async function carregarReservas(){
-  const el=document.getElementById('resList'); el.innerHTML='<div class="loading">Carregando reservas...</div>';
+  const el=document.getElementById('resList'); el.innerHTML='<div class="loading">Carregando...</div>';
   try{
     const r=await fetch(API+'/api/admin/reservas',{headers:admHeaders}); const d=await r.json();
     if(!d.reservas||!d.reservas.length){el.innerHTML='<div class="empty-msg">Nenhuma reserva cadastrada ainda.</div>';return;}
@@ -522,7 +533,7 @@ async function carregarReservas(){
 }
 
 async function salvarReserva(){
-  const nome=document.getElementById('nNome').value.trim(), checkin=document.getElementById('nIn').value, checkout=document.getElementById('nOut').value;
+  const nome=document.getElementById('nNome').value.trim(),checkin=document.getElementById('nIn').value,checkout=document.getElementById('nOut').value;
   const errEl=document.getElementById('msgResErr'); errEl.classList.remove('show');
   if(!nome||!checkin||!checkout){errEl.textContent='Preencha nome, check-in e check-out.';errEl.classList.add('show');return;}
   try{
@@ -538,38 +549,67 @@ async function delReserva(id){
   catch(e){ alert('Erro ao remover.'); }
 }
 
-async function carregarCampanhasAdm(){
-  const el=document.getElementById('campList'); el.innerHTML='<div class="loading">Carregando...</div>';
+async function carregarPromosAdm(){
+  const el=document.getElementById('promoList'); el.innerHTML='<div class="loading">Carregando...</div>';
   try{
-    const r=await fetch(API+'/api/admin/campanhas',{headers:admHeaders}); const d=await r.json();
-    if(!d.campanhas||!d.campanhas.length){el.innerHTML='<div class="empty-msg">Nenhuma campanha criada ainda.</div>';return;}
-    el.innerHTML=d.campanhas.map(c=>`<div class="camp-item"><div class="camp-header"><div class="camp-name">${c.titulo}</div><div class="camp-actions"><button class="toggle-btn ${c.ativa?'on':''}" onclick="toggleCamp(${c.id},${c.ativa?0:1})">${c.ativa?'✓ Ativa':'Inativa'}</button><button class="del-btn" onclick="delCamp(${c.id})">×</button></div></div><div class="camp-meta">${c.descricao||''} ${c.periodo?'· 📆 '+c.periodo:''} · <strong style="color:#e8a020">${c.preco}</strong> <span style="color:rgba(255,255,255,0.3)">${c.tipo_preco||''}</span></div></div>`).join('');
-  }catch(e){ el.innerHTML='<div class="empty-msg">Erro ao carregar campanhas.</div>'; }
+    const r=await fetch(API+'/api/admin/promocoes',{headers:admHeaders}); const d=await r.json();
+    if(!d.promocoes||!d.promocoes.length){el.innerHTML='<div class="empty-msg">Nenhuma promoção criada ainda.</div>';return;}
+    const sLabels={ativa:'🟡 Ativa',em_breve:'🔵 Em breve',encerrada:'⚫ Encerrada'};
+    el.innerHTML=d.promocoes.map(p=>`
+      <div class="promo-item">
+        <div class="promo-header">
+          <div>
+            <div class="promo-name">${p.titulo}</div>
+            <div class="promo-meta">${p.preco} ${p.tipo_preco||''} ${p.periodo?'· 📆 '+p.periodo:''}</div>
+          </div>
+          <div class="promo-actions">
+            <button class="status-btn ${p.status==='ativa'?'ativa':''}" onclick="mudarStatus(${p.id},'ativa')" title="Marcar como ativa">🟡 Ativa</button>
+            <button class="status-btn ${p.status==='em_breve'?'em_breve':''}" onclick="mudarStatus(${p.id},'em_breve')" title="Marcar como em breve">🔵 Em breve</button>
+            <button class="status-btn ${p.status==='encerrada'?'encerrada':''}" onclick="mudarStatus(${p.id},'encerrada')" title="Marcar como encerrada">⚫ Encerrada</button>
+            <button class="del-btn" onclick="delPromo(${p.id})" title="Excluir">×</button>
+          </div>
+        </div>
+        ${p.descricao?`<div class="promo-meta" style="margin-top:2px;font-style:italic">${p.descricao}</div>`:''}
+      </div>`).join('');
+  }catch(e){ el.innerHTML='<div class="empty-msg">Erro ao carregar.</div>'; }
 }
 
-async function salvarCamp(){
-  const titulo=document.getElementById('cTitulo').value.trim(), preco=document.getElementById('cPreco').value.trim();
-  const tipo=document.getElementById('cTipo').value, desc=document.getElementById('cDesc').value.trim(), periodo=document.getElementById('cPeriodo').value.trim();
+async function salvarPromo(){
+  const titulo=document.getElementById('pTitulo').value.trim(), preco=document.getElementById('pPreco').value.trim();
   if(!titulo||!preco){alert('Preencha título e valor.');return;}
   try{
-    const r=await fetch(API+'/api/admin/campanhas',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({titulo,preco,tipo_preco:tipo,descricao:desc,periodo})});
-    if(r.ok){ ['cTitulo','cPreco','cDesc','cPeriodo'].forEach(id=>document.getElementById(id).value=''); await carregarCampanhasAdm(); await carregarCampanha(); const ok=document.getElementById('msgCampOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
-  }catch(e){ alert('Erro ao salvar campanha.'); }
+    const r=await fetch(API+'/api/admin/promocoes',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({
+      titulo, preco,
+      tipo_preco:document.getElementById('pTipo').value,
+      descricao:document.getElementById('pDesc').value.trim(),
+      periodo:document.getElementById('pPeriodo').value.trim(),
+      status:document.getElementById('pStatus').value
+    })});
+    if(r.ok){
+      ['pTitulo','pPreco','pDesc','pPeriodo'].forEach(id=>document.getElementById(id).value='');
+      await carregarPromosAdm();
+      await carregarPromoPublic();
+      const ok=document.getElementById('msgPromoOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000);
+    }
+  }catch(e){ alert('Erro ao salvar promoção.'); }
 }
 
-async function toggleCamp(id,ativa){
-  try{ await fetch(API+`/api/admin/campanhas/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({ativa:ativa===1})}); await carregarCampanhasAdm(); await carregarCampanha(); }
-  catch(e){ alert('Erro ao atualizar campanha.'); }
+async function mudarStatus(id, status){
+  try{
+    await fetch(API+`/api/admin/promocoes/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({status})});
+    await carregarPromosAdm();
+    await carregarPromoPublic();
+  }catch(e){ alert('Erro ao atualizar status.'); }
 }
 
-async function delCamp(id){
-  if(!confirm('Remover esta campanha?')) return;
-  try{ await fetch(API+`/api/admin/campanhas/${id}`,{method:'DELETE',headers:admHeaders}); await carregarCampanhasAdm(); await carregarCampanha(); }
-  catch(e){ alert('Erro ao remover.'); }
+async function delPromo(id){
+  if(!confirm('Excluir esta promoção permanentemente?')) return;
+  try{ await fetch(API+`/api/admin/promocoes/${id}`,{method:'DELETE',headers:admHeaders}); await carregarPromosAdm(); await carregarPromoPublic(); }
+  catch(e){ alert('Erro ao excluir.'); }
 }
 
 initCal();
-carregarCampanha();
+carregarPromoPublic();
 </script>
 </body>
 </html>
