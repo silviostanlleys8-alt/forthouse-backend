@@ -35,6 +35,8 @@ async function initDB() {
 
   // migração segura: adicionar coluna status se não existir (tabela campanhas antiga)
   try { await db.execute(`ALTER TABLE promocoes ADD COLUMN status TEXT DEFAULT 'ativa'`); } catch(e){}
+  // migração: coluna sinal nas reservas
+  try { await db.execute(`ALTER TABLE reservas ADD COLUMN sinal REAL DEFAULT 0`); } catch(e){}
 
   console.log('Banco iniciado com sucesso!');
 }
@@ -90,21 +92,21 @@ app.get('/api/admin/reservas', authAdmin, async (req, res) => {
 });
 
 app.post('/api/admin/reservas', authAdmin, async (req, res) => {
-  const { nome, cpf, wpp, checkin, checkout, valor, obs } = req.body;
+  const { nome, cpf, wpp, checkin, checkout, valor, sinal, obs } = req.body;
   if (!nome || !checkin || !checkout) return res.status(400).json({ error: 'Nome, check-in e check-out são obrigatórios' });
   try {
-    await db.execute({ sql: 'INSERT INTO reservas (nome,cpf,wpp,checkin,checkout,valor,tipo,obs) VALUES (?,?,?,?,?,?,?,?)', args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, 'manual', obs||''] });
+    await db.execute({ sql: 'INSERT INTO reservas (nome,cpf,wpp,checkin,checkout,valor,sinal,tipo,obs) VALUES (?,?,?,?,?,?,?,?,?)', args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, sinal||0, 'manual', obs||''] });
     res.json({ ok: true });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.put('/api/admin/reservas/:id', authAdmin, async (req, res) => {
-  const { nome, cpf, wpp, checkin, checkout, valor, obs } = req.body;
+  const { nome, cpf, wpp, checkin, checkout, valor, sinal, obs } = req.body;
   if (!nome || !checkin || !checkout) return res.status(400).json({ error: 'Nome, check-in e check-out são obrigatórios' });
   try {
     await db.execute({
-      sql: 'UPDATE reservas SET nome=?,cpf=?,wpp=?,checkin=?,checkout=?,valor=?,obs=? WHERE id=?',
-      args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, obs||'', req.params.id]
+      sql: 'UPDATE reservas SET nome=?,cpf=?,wpp=?,checkin=?,checkout=?,valor=?,sinal=?,obs=? WHERE id=?',
+      args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, sinal||0, obs||'', req.params.id]
     });
     res.json({ ok: true });
   } catch (e) { res.status(500).json({ error: e.message }); }
