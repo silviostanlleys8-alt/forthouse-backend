@@ -7,8 +7,6 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Georgia',serif;background:#0d1b3e;color:#fff;min-height:100vh}
-
-    /* NAVBAR */
     .navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:0.5px solid rgba(255,255,255,0.08);background:#0d1b3e;position:sticky;top:0;z-index:50}
     .nav-brand .fort{color:#e8a020;font-size:22px;font-weight:bold;letter-spacing:1px}
     .nav-brand .house{color:#5b9ee1;font-size:22px;font-weight:bold;letter-spacing:1px}
@@ -21,16 +19,28 @@
     .nav-admin-btn:hover{color:#e8a020;border-color:#e8a020}
     .nav-cta{background:#e8a020;color:#0d1b3e;border:none;padding:10px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif}
 
-    /* CAMPANHA BANNER */
-    #campBanner{display:none;background:#7a1f00;border-bottom:2px solid #e8a020;padding:16px 40px;text-align:center;position:relative}
+    /* BANNER CAMPANHA PROFISSIONAL */
+    #campBanner{display:none;position:relative;overflow:hidden}
     #campBanner.ativa{display:block}
-    .cb-badge{display:inline-block;background:#e8a020;color:#0d1b3e;font-size:10px;font-weight:bold;letter-spacing:2px;padding:3px 10px;border-radius:2px;margin-bottom:6px;font-family:sans-serif;text-transform:uppercase}
-    .cb-title{font-size:20px;color:#fff;margin-bottom:4px}
-    .cb-desc{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.75);margin-bottom:8px}
-    .cb-preco{font-family:sans-serif;font-size:24px;font-weight:bold;color:#e8a020;margin-bottom:12px}
-    .cb-preco span{font-size:13px;color:rgba(255,255,255,0.5);font-weight:normal}
-    .cb-btn{background:#e8a020;color:#0d1b3e;border:none;padding:10px 28px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase}
-    .cb-close{position:absolute;top:10px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:22px;cursor:pointer}
+    .cb-bg{background:#0a1628;border-bottom:3px solid #e8a020;padding:0}
+    .cb-inner{display:flex;align-items:stretch;max-width:900px;margin:0 auto}
+    .cb-left{background:#e8a020;padding:20px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:140px;text-align:center;flex-shrink:0}
+    .cb-left-icon{font-size:28px;margin-bottom:4px}
+    .cb-left-label{font-family:sans-serif;font-size:10px;font-weight:bold;letter-spacing:2px;color:#0d1b3e;text-transform:uppercase}
+    .cb-left-sub{font-family:sans-serif;font-size:9px;color:rgba(13,27,62,0.6);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+    .cb-center{flex:1;padding:20px 28px;border-right:0.5px solid rgba(255,255,255,0.08)}
+    .cb-tag{font-family:sans-serif;font-size:10px;color:#e8a020;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+    .cb-title{font-size:22px;color:#fff;font-weight:normal;margin-bottom:6px;line-height:1.2}
+    .cb-desc{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
+    .cb-right{padding:20px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-width:200px;flex-shrink:0}
+    .cb-preco-label{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+    .cb-preco-val{font-family:sans-serif;font-size:32px;font-weight:bold;color:#e8a020;line-height:1;margin-bottom:2px}
+    .cb-preco-tipo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:14px}
+    .cb-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:12px;font-weight:bold;letter-spacing:1.5px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%}
+    .cb-btn:hover{background:#f0b030}
+    .cb-close{position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,0.3);font-size:20px;cursor:pointer;line-height:1;z-index:2}
+    .cb-close:hover{color:#fff}
+    .cb-periodo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px}
 
     /* HERO */
     .hero{position:relative;min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:56px;text-align:center;overflow:hidden}
@@ -47,19 +57,16 @@
     .btn-primary{background:#e8a020;color:#0d1b3e;border:none;padding:15px 34px;font-size:13px;font-weight:bold;letter-spacing:2px;cursor:pointer;border-radius:2px;text-transform:uppercase;font-family:sans-serif}
     .btn-secondary{background:transparent;color:#fff;border:1.5px solid #fff;padding:15px 34px;font-size:13px;font-weight:bold;letter-spacing:2px;cursor:pointer;border-radius:2px;text-transform:uppercase;font-family:sans-serif}
 
-    /* FEATURES */
     .features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-bottom:0.5px solid rgba(255,255,255,0.06)}
     .feat{padding:32px 28px;background:#0d1b3e;text-align:center}
     .feat-icon{width:44px;height:44px;border-radius:50%;border:0.5px solid rgba(232,160,32,0.35);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:#e8a020;font-size:20px}
     .feat h3{font-size:15px;font-weight:normal;color:#fff;margin-bottom:8px}
     .feat p{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;font-weight:300}
 
-    /* DIVIDER */
     .divider{display:flex;align-items:center;gap:20px;padding:40px 40px 0;max-width:700px;margin:0 auto}
     .div-line{flex:1;height:0.5px;background:rgba(255,255,255,0.08)}
     .div-text{color:rgba(255,255,255,0.2);font-size:10px;letter-spacing:3px;text-transform:uppercase;white-space:nowrap;font-family:sans-serif}
 
-    /* CALENDÁRIO */
     .availability{padding:48px 40px;max-width:700px;margin:0 auto}
     .section-label{font-family:sans-serif;font-size:10px;letter-spacing:4px;color:#e8a020;text-transform:uppercase;margin-bottom:12px}
     .section-title{font-size:26px;font-weight:normal;margin-bottom:28px;color:#fff}
@@ -74,7 +81,6 @@
     .mday{padding:9px 2px;font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.55);cursor:pointer;border-radius:2px;transition:all .15s;user-select:none}
     .mday:hover:not(.occ):not(.empty):not(.past){background:rgba(232,160,32,0.15);color:#e8a020}
     .mday.occ{background:rgba(91,158,225,0.1);color:rgba(91,158,225,0.4);cursor:not-allowed;font-size:10px}
-    .mday.manual-occ{background:rgba(232,160,32,0.12);color:rgba(232,160,32,0.4);cursor:not-allowed;font-size:10px}
     .mday.sel{background:#e8a020;color:#0d1b3e;font-weight:bold}
     .mday.in-range{background:rgba(232,160,32,0.12);color:#e8a020}
     .mday.today-mark{border:0.5px solid #e8a020}
@@ -90,7 +96,6 @@
     .cal-result-text{font-family:sans-serif;font-size:13px;color:#e8a020;margin-bottom:12px;line-height:1.6}
     .cal-reserve-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;width:100%;text-transform:uppercase;font-family:sans-serif}
 
-    /* PRICING */
     .pricing{padding:48px 40px;border-top:0.5px solid rgba(255,255,255,0.06);max-width:700px;margin:0 auto}
     .price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .price-card{border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:24px 16px;text-align:center}
@@ -102,22 +107,19 @@
     .price-val span{font-size:12px;color:rgba(255,255,255,0.3)}
     .price-note{font-family:sans-serif;font-size:10px;color:rgba(255,255,255,0.25);margin-top:6px}
 
-    /* FOOTER */
     .footer-strip{padding:24px 40px;border-top:0.5px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
     .footer-wpp{display:flex;align-items:center;gap:8px;background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.25);padding:10px 18px;border-radius:2px;cursor:pointer;font-family:sans-serif;font-size:12px;color:#25D366;letter-spacing:0.5px;text-decoration:none}
 
-    /* ADMIN OVERLAY */
+    /* ADMIN */
     #adminOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;overflow-y:auto;padding:32px 16px}
     #adminOverlay.open{display:block}
-    .admin-box{background:#0d1b3e;border:0.5px solid rgba(255,255,255,0.12);border-radius:6px;max-width:680px;margin:0 auto;padding:28px}
+    .admin-box{background:#0d1b3e;border:0.5px solid rgba(255,255,255,0.12);border-radius:6px;max-width:700px;margin:0 auto;padding:28px}
     .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
     .admin-header h2{font-size:18px;font-weight:normal;color:#e8a020}
     .admin-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:24px;cursor:pointer;line-height:1}
-    .admin-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
+    .admin-tabs{display:flex;margin-bottom:24px;border-bottom:0.5px solid rgba(255,255,255,0.08)}
     .atab{padding:10px 20px;font-family:sans-serif;font-size:13px;cursor:pointer;color:rgba(255,255,255,0.4);border:none;border-bottom:2px solid transparent;background:none}
     .atab.active{color:#e8a020;border-bottom-color:#e8a020}
-
-    /* FORMS */
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
     .form-group{display:flex;flex-direction:column;gap:6px}
     .form-group label{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase}
@@ -127,8 +129,6 @@
     .form-group textarea{resize:vertical;min-height:64px}
     .save-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%;margin-top:16px}
     .cancel-btn{background:transparent;color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.15);padding:10px 20px;font-size:12px;cursor:pointer;border-radius:2px;font-family:sans-serif;width:100%;margin-top:8px}
-
-    /* LISTAS ADMIN */
     .res-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
     .res-info{flex:1}
     .res-name{font-size:14px;color:#fff;margin-bottom:3px}
@@ -151,6 +151,7 @@
     .msg-err.show{display:block}
     .empty-msg{font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.3);text-align:center;padding:24px}
     .loading{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:20px}
+    .hint{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.25);margin-top:6px;line-height:1.5}
 
     @media(max-width:600px){
       .navbar{padding:14px 16px}
@@ -162,19 +163,38 @@
       .form-row{grid-template-columns:1fr}
       .divider{padding:32px 16px 0}
       .footer-strip{flex-direction:column;gap:16px;text-align:center}
+      .cb-inner{flex-direction:column}
+      .cb-left{flex-direction:row;gap:10px;min-width:unset;padding:14px 20px}
+      .cb-right{min-width:unset;padding:14px 20px}
     }
   </style>
 </head>
 <body>
 
-<!-- BANNER CAMPANHA -->
+<!-- BANNER CAMPANHA PROFISSIONAL -->
 <div id="campBanner">
-  <button class="cb-close" onclick="fecharBanner()">×</button>
-  <div class="cb-badge">⭐ Oferta especial</div>
-  <div class="cb-title" id="cbTitle"></div>
-  <div class="cb-desc" id="cbDesc"></div>
-  <div class="cb-preco" id="cbPreco"></div>
-  <button class="cb-btn" onclick="scrollCal()">Quero reservar agora</button>
+  <div class="cb-bg">
+    <button class="cb-close" onclick="fecharBanner()" title="Fechar">×</button>
+    <div class="cb-inner">
+      <div class="cb-left">
+        <div class="cb-left-icon">🏖️</div>
+        <div class="cb-left-label">Oferta</div>
+        <div class="cb-left-sub">especial</div>
+      </div>
+      <div class="cb-center">
+        <div class="cb-tag">Promoção limitada</div>
+        <div class="cb-title" id="cbTitle"></div>
+        <div class="cb-desc" id="cbDesc"></div>
+        <div class="cb-periodo" id="cbPeriodo"></div>
+      </div>
+      <div class="cb-right">
+        <div class="cb-preco-label">A partir de</div>
+        <div class="cb-preco-val" id="cbPrecoVal"></div>
+        <div class="cb-preco-tipo" id="cbPrecoTipo"></div>
+        <button class="cb-btn" onclick="scrollCal()">Quero reservar agora →</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- NAVBAR -->
@@ -209,26 +229,12 @@
   </div>
 </section>
 
-<!-- FEATURES -->
 <div class="features">
-  <div class="feat">
-    <div class="feat-icon">📅</div>
-    <h3>Reserva online</h3>
-    <p>Veja as datas disponíveis e reserve de forma rápida e segura, sem burocracia.</p>
-  </div>
-  <div class="feat">
-    <div class="feat-icon">🔒</div>
-    <h3>Pagamento seguro</h3>
-    <p>Apenas 20% de entrada para confirmar. O restante é pago na entrega das chaves.</p>
-  </div>
-  <div class="feat">
-    <div class="feat-icon">💬</div>
-    <h3>Suporte direto</h3>
-    <p>Atendimento pelo WhatsApp. Confirme sua reserva direto com o proprietário.</p>
-  </div>
+  <div class="feat"><div class="feat-icon">📅</div><h3>Reserva online</h3><p>Veja as datas disponíveis e reserve de forma rápida e segura, sem burocracia.</p></div>
+  <div class="feat"><div class="feat-icon">🔒</div><h3>Pagamento seguro</h3><p>Apenas 20% de entrada para confirmar. O restante é pago na entrega das chaves.</p></div>
+  <div class="feat"><div class="feat-icon">💬</div><h3>Suporte direto</h3><p>Atendimento pelo WhatsApp. Confirme sua reserva direto com o proprietário.</p></div>
 </div>
 
-<!-- CALENDÁRIO -->
 <div class="divider"><div class="div-line"></div><div class="div-text">Disponibilidade</div><div class="div-line"></div></div>
 
 <section class="availability" id="secCal">
@@ -240,13 +246,10 @@
       <span id="ctitle"></span>
       <button class="cal-nav-btn" onclick="chM(1)">›</button>
     </div>
-    <div class="cal-weekdays">
-      <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
-    </div>
+    <div class="cal-weekdays"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
     <div class="mini-grid" id="mgrid"></div>
     <div class="cal-legend">
       <div class="leg"><div class="leg-dot" style="background:rgba(91,158,225,0.3)"></div> Reservado</div>
-      <div class="leg"><div class="leg-dot" style="background:rgba(232,160,32,0.3)"></div> Bloqueado</div>
       <div class="leg"><div class="leg-dot" style="background:#e8a020"></div> Selecionado</div>
       <div class="leg"><div class="leg-dot" style="border:0.5px solid #e8a020"></div> Hoje</div>
     </div>
@@ -258,7 +261,6 @@
   </div>
 </section>
 
-<!-- PREÇOS -->
 <div class="divider"><div class="div-line"></div><div class="div-text">Temporadas</div><div class="div-line"></div></div>
 
 <section class="pricing">
@@ -290,7 +292,6 @@
   <p style="font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.2);margin-top:16px;text-align:center">Valores em reais (BRL). O restante do pagamento é realizado na entrega das chaves.</p>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer-strip">
   <div>
     <div style="font-family:'Georgia',serif;font-size:18px"><span style="color:#e8a020">fort</span><span style="color:#5b9ee1">house</span></div>
@@ -305,28 +306,19 @@
 <!-- ADMIN OVERLAY -->
 <div id="adminOverlay">
   <div class="admin-box">
-
-    <!-- LOGIN -->
     <div id="adminLogin">
       <div class="admin-header">
         <h2>🔒 Painel administrativo</h2>
         <button class="admin-close" onclick="fecharAdmin()">×</button>
       </div>
       <div style="max-width:300px;margin:0 auto;padding-top:8px">
-        <div class="form-group" style="margin-bottom:12px">
-          <label>Usuário</label>
-          <input type="text" id="admUser" placeholder="admin" onkeydown="if(event.key==='Enter')loginAdm()">
-        </div>
-        <div class="form-group" style="margin-bottom:16px">
-          <label>Senha</label>
-          <input type="password" id="admPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginAdm()">
-        </div>
+        <div class="form-group" style="margin-bottom:12px"><label>Usuário</label><input type="text" id="admUser" placeholder="admin" onkeydown="if(event.key==='Enter')loginAdm()"></div>
+        <div class="form-group" style="margin-bottom:16px"><label>Senha</label><input type="password" id="admPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginAdm()"></div>
         <div class="msg-err" id="loginErr">Usuário ou senha incorretos.</div>
         <button class="save-btn" onclick="loginAdm()">Entrar</button>
       </div>
     </div>
 
-    <!-- PAINEL -->
     <div id="adminPanel" style="display:none">
       <div class="admin-header">
         <h2>⚙️ Painel administrativo</h2>
@@ -338,13 +330,11 @@
         <button class="atab" onclick="switchTab('campanhas')">Campanhas</button>
       </div>
 
-      <!-- ABA RESERVAS -->
       <div id="tabReservas">
         <div class="msg-ok" id="msgResOk">✓ Reserva salva com sucesso!</div>
         <div id="resList"><div class="loading">Carregando...</div></div>
       </div>
 
-      <!-- ABA NOVA RESERVA -->
       <div id="tabNova" style="display:none">
         <div class="msg-err" id="msgResErr"></div>
         <div class="form-row">
@@ -359,7 +349,7 @@
           <div class="form-group"><label>Check-in *</label><input type="date" id="nIn"></div>
           <div class="form-group"><label>Check-out *</label><input type="date" id="nOut"></div>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:12px">
           <label>Observações</label>
           <textarea id="nObs" placeholder="Ex: pagamento antecipado, chave com vizinho..."></textarea>
         </div>
@@ -367,25 +357,46 @@
         <button class="cancel-btn" onclick="switchTab('reservas')">Cancelar</button>
       </div>
 
-      <!-- ABA CAMPANHAS -->
       <div id="tabCampanhas" style="display:none">
-        <div class="msg-ok" id="msgCampOk">✓ Campanha salva com sucesso!</div>
+        <div class="msg-ok" id="msgCampOk">✓ Campanha publicada com sucesso!</div>
         <div id="campList"><div class="loading">Carregando...</div></div>
         <div style="border-top:0.5px solid rgba(255,255,255,0.08);margin-top:20px;padding-top:20px">
-          <p style="font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:14px">Nova campanha</p>
+          <p style="font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:14px">✦ Nova campanha</p>
           <div class="form-row">
-            <div class="form-group"><label>Título *</label><input type="text" id="cTitulo" placeholder="Ex: Réveillon 2027"></div>
-            <div class="form-group"><label>Preço promocional *</label><input type="text" id="cPreco" placeholder="Ex: R$ 280 / noite"></div>
+            <div class="form-group">
+              <label>Título da campanha *</label>
+              <input type="text" id="cTitulo" placeholder="Ex: Carnaval 2027">
+            </div>
+            <div class="form-group">
+              <label>Período da oferta</label>
+              <input type="text" id="cPeriodo" placeholder="Ex: 05/02 a 10/02/2027">
+            </div>
           </div>
-          <div class="form-group" style="margin-bottom:0">
-            <label>Descrição</label>
-            <input type="text" id="cDesc" placeholder="Ex: 3 diárias pelo preço de 2! Só até 30/nov.">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Valor *</label>
+              <input type="text" id="cPreco" placeholder="Ex: R$ 4.500">
+            </div>
+            <div class="form-group">
+              <label>Tipo do valor *</label>
+              <select id="cTipo">
+                <option value="por noite">Por noite</option>
+                <option value="por fim de semana">Por fim de semana</option>
+                <option value="pacote completo">Pacote completo</option>
+                <option value="por pessoa">Por pessoa</option>
+                <option value="diária">Por diária</option>
+              </select>
+            </div>
           </div>
+          <div class="form-group" style="margin-bottom:4px">
+            <label>Descrição da oferta</label>
+            <input type="text" id="cDesc" placeholder="Ex: Inclui 5 noites, estacionamento e acesso à praia privativa">
+          </div>
+          <p class="hint">💡 A campanha aparece em destaque no topo do site assim que publicada. Você pode ativar/desativar quando quiser.</p>
           <button class="save-btn" onclick="salvarCamp()">📢 Publicar campanha</button>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -393,348 +404,170 @@
 const API = '';
 const WPP = '5587981773054';
 const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let cy, cm, s1=null, s2=null, datasOcupadas=[], admHeaders={};
 
-let cy, cm, s1 = null, s2 = null;
-let datasOcupadas = [];
-let admHeaders = {};
-
-// ── Calendário ────────────────────────────────────────────────────────────────
-function initCal() {
-  const hoje = new Date();
-  cy = hoje.getFullYear();
-  cm = hoje.getMonth();
+function initCal(){
+  const h=new Date(); cy=h.getFullYear(); cm=h.getMonth();
   carregarDatas().then(render);
 }
 
-async function carregarDatas() {
-  try {
-    const r = await fetch(API + '/api/datas-ocupadas');
-    const d = await r.json();
-    datasOcupadas = d.datas || [];
-  } catch(e) { datasOcupadas = []; }
+async function carregarDatas(){
+  try{ const r=await fetch(API+'/api/datas-ocupadas'); const d=await r.json(); datasOcupadas=d.datas||[]; }
+  catch(e){ datasOcupadas=[]; }
 }
 
-function isOcc(y, m, d) {
-  const s = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-  return datasOcupadas.includes(s);
-}
+function isOcc(y,m,d){ return datasOcupadas.includes(`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`); }
+function isPast(y,m,d){ const h=new Date(); h.setHours(0,0,0,0); return new Date(y,m,d)<h; }
+function fmt(a){ return `${String(a[2]).padStart(2,'0')}/${String(a[1]+1).padStart(2,'0')}/${a[0]}`; }
 
-function isPast(y, m, d) {
-  const hoje = new Date(); hoje.setHours(0,0,0,0);
-  return new Date(y, m, d) < hoje;
-}
-
-function fmt(arr) {
-  return `${String(arr[2]).padStart(2,'0')}/${String(arr[1]+1).padStart(2,'0')}/${arr[0]}`;
-}
-
-function toISO(arr) {
-  return `${arr[0]}-${String(arr[1]+1).padStart(2,'0')}-${String(arr[2]).padStart(2,'0')}`;
-}
-
-function render() {
-  document.getElementById('ctitle').textContent = meses[cm] + ' ' + cy;
-  const first = new Date(cy, cm, 1).getDay();
-  const days  = new Date(cy, cm+1, 0).getDate();
-  const hoje  = new Date(); hoje.setHours(0,0,0,0);
-  let html = '';
-  for (let i = 0; i < first; i++) html += '<div class="mday empty"></div>';
-  for (let d = 1; d <= days; d++) {
-    const occ  = isOcc(cy, cm, d);
-    const past = isPast(cy, cm, d);
-    const tod  = hoje.getFullYear()===cy && hoje.getMonth()===cm && hoje.getDate()===d;
-    const sel1 = s1 && s1[0]===cy && s1[1]===cm && s1[2]===d;
-    const sel2 = s2 && s2[0]===cy && s2[1]===cm && s2[2]===d;
-    let inRange = false;
-    if (s1 && s2) {
-      const dd = new Date(cy,cm,d);
-      inRange = dd > new Date(s1[0],s1[1],s1[2]) && dd < new Date(s2[0],s2[1],s2[2]);
-    }
-    let cls = 'mday';
-    if (occ)  cls += ' occ';
-    else if (past) cls += ' past';
-    else if (sel1 || sel2) cls += ' sel';
-    else if (inRange) cls += ' in-range';
-    if (tod) cls += ' today-mark';
-    const label = occ ? 'Res.' : d;
-    html += `<div class="${cls}" onclick="pickDay(${cy},${cm},${d})">${label}</div>`;
+function render(){
+  document.getElementById('ctitle').textContent=meses[cm]+' '+cy;
+  const first=new Date(cy,cm,1).getDay(), days=new Date(cy,cm+1,0).getDate();
+  const h=new Date(); h.setHours(0,0,0,0);
+  let html='';
+  for(let i=0;i<first;i++) html+='<div class="mday empty"></div>';
+  for(let d=1;d<=days;d++){
+    const occ=isOcc(cy,cm,d), past=isPast(cy,cm,d);
+    const tod=h.getFullYear()===cy&&h.getMonth()===cm&&h.getDate()===d;
+    const sel=(s1&&s1[0]===cy&&s1[1]===cm&&s1[2]===d)||(s2&&s2[0]===cy&&s2[1]===cm&&s2[2]===d);
+    let ir=false;
+    if(s1&&s2){const dd=new Date(cy,cm,d); ir=dd>new Date(s1[0],s1[1],s1[2])&&dd<new Date(s2[0],s2[1],s2[2]);}
+    let cls='mday';
+    if(occ) cls+=' occ';
+    else if(past) cls+=' past';
+    else if(sel||ir) cls+=sel?' sel':' in-range';
+    if(tod) cls+=' today-mark';
+    html+=`<div class="${cls}" onclick="pickDay(${cy},${cm},${d})">${occ?'Res.':d}</div>`;
   }
-  document.getElementById('mgrid').innerHTML = html;
+  document.getElementById('mgrid').innerHTML=html;
   updateInfo();
 }
 
-function pickDay(y, m, d) {
-  if (isOcc(y,m,d) || isPast(y,m,d)) return;
-  if (!s1 || s2) { s1 = [y,m,d]; s2 = null; }
-  else {
-    const a = new Date(s1[0],s1[1],s1[2]);
-    const b = new Date(y,m,d);
-    if (b <= a) { s1 = [y,m,d]; s2 = null; }
-    else s2 = [y,m,d];
-  }
+function pickDay(y,m,d){
+  if(isOcc(y,m,d)||isPast(y,m,d)) return;
+  if(!s1||s2){s1=[y,m,d];s2=null;}
+  else{ const a=new Date(s1[0],s1[1],s1[2]),b=new Date(y,m,d); if(b<=a){s1=[y,m,d];s2=null;}else s2=[y,m,d]; }
   render();
 }
 
-function updateInfo() {
-  const info = document.getElementById('calInfo');
-  const res  = document.getElementById('calRes');
-  const txt  = document.getElementById('calResText');
-  if (!s1) {
-    info.textContent = 'Selecione a data de check-in no calendário acima.';
-    info.classList.add('show'); res.classList.remove('show'); return;
-  }
-  if (!s2) {
-    info.textContent = `Check-in: ${fmt(s1)} — Agora selecione a data de saída.`;
-    info.classList.add('show'); res.classList.remove('show'); return;
-  }
+function updateInfo(){
+  const info=document.getElementById('calInfo'), res=document.getElementById('calRes'), txt=document.getElementById('calResText');
+  if(!s1){info.textContent='Selecione a data de check-in no calendário acima.';info.classList.add('show');res.classList.remove('show');return;}
+  if(!s2){info.textContent=`Check-in: ${fmt(s1)} — Agora selecione a data de saída.`;info.classList.add('show');res.classList.remove('show');return;}
   info.classList.remove('show');
-  const a = new Date(s1[0],s1[1],s1[2]);
-  const b = new Date(s2[0],s2[1],s2[2]);
-  const noites = Math.round((b-a)/86400000);
-  const total  = noites * 250;
-  const entrada = Math.round(total * 0.2);
-  txt.innerHTML = `
-    <strong style="color:#fff">Check-in:</strong> ${fmt(s1)} &nbsp;→&nbsp; <strong style="color:#fff">Check-out:</strong> ${fmt(s2)}<br>
-    ${noites} noite${noites>1?'s':''} &nbsp;·&nbsp; Total estimado: <strong>R$ ${total.toLocaleString('pt-BR')}</strong><br>
-    Entrada (20%): <strong>R$ ${entrada.toLocaleString('pt-BR')}</strong>
-  `;
+  const a=new Date(s1[0],s1[1],s1[2]),b=new Date(s2[0],s2[1],s2[2]);
+  const n=Math.round((b-a)/86400000), total=n*250, ent=Math.round(total*.2);
+  txt.innerHTML=`<strong style="color:#fff">Check-in:</strong> ${fmt(s1)} &nbsp;→&nbsp; <strong style="color:#fff">Check-out:</strong> ${fmt(s2)}<br>${n} noite${n>1?'s':''} &nbsp;·&nbsp; Total estimado: <strong>R$ ${total.toLocaleString('pt-BR')}</strong><br>Entrada (20%): <strong>R$ ${ent.toLocaleString('pt-BR')}</strong>`;
   res.classList.add('show');
 }
 
-function chM(dir) {
-  cm += dir;
-  if (cm > 11) { cm = 0; cy++; }
-  if (cm < 0)  { cm = 11; cy--; }
-  render();
+function chM(d){ cm+=d; if(cm>11){cm=0;cy++;}if(cm<0){cm=11;cy--;} render(); }
+function scrollCal(){ document.getElementById('secCal').scrollIntoView({behavior:'smooth'}); }
+
+function abrirWpp(){
+  if(!s1||!s2) return;
+  const a=new Date(s1[0],s1[1],s1[2]),b=new Date(s2[0],s2[1],s2[2]);
+  const n=Math.round((b-a)/86400000), total=n*250, ent=Math.round(total*.2);
+  const msg=encodeURIComponent(`Olá! Tenho interesse em reservar a *Forthouse Casa de Praia* na Ilha de Itamaracá.\n\n📅 *Check-in:* ${fmt(s1)}\n📅 *Check-out:* ${fmt(s2)}\n🌙 *Noites:* ${n}\n💰 *Total estimado:* R$ ${total.toLocaleString('pt-BR')}\n💳 *Entrada (20%):* R$ ${ent.toLocaleString('pt-BR')}\n\nAguardo confirmação para concluir a reserva!`);
+  window.open(`https://wa.me/${WPP}?text=${msg}`,'_blank');
 }
 
-function scrollCal() { document.getElementById('secCal').scrollIntoView({behavior:'smooth'}); }
-
-function abrirWpp() {
-  if (!s1 || !s2) return;
-  const a = new Date(s1[0],s1[1],s1[2]);
-  const b = new Date(s2[0],s2[1],s2[2]);
-  const n = Math.round((b-a)/86400000);
-  const total   = n * 250;
-  const entrada = Math.round(total * 0.2);
-  const msg = encodeURIComponent(
-    `Olá! Tenho interesse em reservar a *Forthouse Casa de Praia* na Ilha de Itamaracá.\n\n` +
-    `📅 *Check-in:* ${fmt(s1)}\n` +
-    `📅 *Check-out:* ${fmt(s2)}\n` +
-    `🌙 *Noites:* ${n}\n` +
-    `💰 *Total estimado:* R$ ${total.toLocaleString('pt-BR')}\n` +
-    `💳 *Entrada (20%):* R$ ${entrada.toLocaleString('pt-BR')}\n\n` +
-    `Aguardo confirmação para concluir a reserva!`
-  );
-  window.open(`https://wa.me/${WPP}?text=${msg}`, '_blank');
+async function carregarCampanha(){
+  try{
+    const r=await fetch(API+'/api/campanhas/ativas'); const d=await r.json();
+    if(d.campanha) mostrarBanner(d.campanha);
+  }catch(e){}
 }
 
-// ── Campanha banner ───────────────────────────────────────────────────────────
-async function carregarCampanha() {
-  try {
-    const r = await fetch(API + '/api/campanhas/ativas');
-    const d = await r.json();
-    if (d.campanha) mostrarBanner(d.campanha);
-  } catch(e) {}
-}
-
-function mostrarBanner(c) {
-  document.getElementById('cbTitle').textContent = c.titulo;
-  document.getElementById('cbDesc').textContent  = c.descricao || '';
-  document.getElementById('cbPreco').innerHTML   = c.preco + ' <span>por noite</span>';
+function mostrarBanner(c){
+  document.getElementById('cbTitle').textContent=c.titulo;
+  document.getElementById('cbDesc').textContent=c.descricao||'';
+  document.getElementById('cbPeriodo').textContent=c.periodo?'📆 '+c.periodo:'';
+  document.getElementById('cbPrecoVal').textContent=c.preco||'';
+  document.getElementById('cbPrecoTipo').textContent=c.tipo_preco||'';
   document.getElementById('campBanner').classList.add('ativa');
 }
 
-function fecharBanner() {
-  document.getElementById('campBanner').classList.remove('ativa');
+function fecharBanner(){ document.getElementById('campBanner').classList.remove('ativa'); }
+
+function abrirAdmin(){ document.getElementById('adminOverlay').classList.add('open'); }
+function fecharAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
+
+async function loginAdm(){
+  const user=document.getElementById('admUser').value.trim(), pass=document.getElementById('admPass').value;
+  const err=document.getElementById('loginErr'); err.classList.remove('show');
+  try{
+    const r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user,pass})});
+    if(r.ok){ admHeaders={user,pass}; document.getElementById('adminLogin').style.display='none'; document.getElementById('adminPanel').style.display='block'; carregarReservas(); carregarCampanhasAdm(); }
+    else err.classList.add('show');
+  }catch(e){ err.textContent='Erro de conexão.'; err.classList.add('show'); }
 }
 
-// ── Admin ─────────────────────────────────────────────────────────────────────
-function abrirAdmin() { document.getElementById('adminOverlay').classList.add('open'); }
-function fecharAdmin() { document.getElementById('adminOverlay').classList.remove('open'); }
-
-async function loginAdm() {
-  const user = document.getElementById('admUser').value.trim();
-  const pass = document.getElementById('admPass').value;
-  const err  = document.getElementById('loginErr');
-  err.classList.remove('show');
-  try {
-    const r = await fetch(API + '/api/login', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({user, pass})
-    });
-    if (r.ok) {
-      admHeaders = { user, pass };
-      document.getElementById('adminLogin').style.display = 'none';
-      document.getElementById('adminPanel').style.display = 'block';
-      carregarReservas();
-      carregarCampanhasAdm();
-    } else {
-      err.classList.add('show');
-    }
-  } catch(e) { err.textContent = 'Erro de conexão.'; err.classList.add('show'); }
+function switchTab(t){
+  ['reservas','nova','campanhas'].forEach(x=>{ const el=document.getElementById('tab'+x.charAt(0).toUpperCase()+x.slice(1)); if(el) el.style.display=x===t?'block':'none'; });
+  document.querySelectorAll('.atab').forEach((el,i)=>el.classList.toggle('active',['reservas','nova','campanhas'][i]===t));
+  if(t==='reservas') carregarReservas();
+  if(t==='campanhas') carregarCampanhasAdm();
 }
 
-function switchTab(t) {
-  ['reservas','nova','campanhas'].forEach(x => {
-    const el = document.getElementById('tab' + x.charAt(0).toUpperCase() + x.slice(1));
-    if (el) el.style.display = x === t ? 'block' : 'none';
-  });
-  document.querySelectorAll('.atab').forEach((el,i) => {
-    el.classList.toggle('active', ['reservas','nova','campanhas'][i] === t);
-  });
-  if (t === 'reservas') carregarReservas();
-  if (t === 'campanhas') carregarCampanhasAdm();
+function fmtDate(s){ if(!s) return '—'; const p=s.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; }
+
+async function carregarReservas(){
+  const el=document.getElementById('resList'); el.innerHTML='<div class="loading">Carregando reservas...</div>';
+  try{
+    const r=await fetch(API+'/api/admin/reservas',{headers:admHeaders}); const d=await r.json();
+    if(!d.reservas||!d.reservas.length){el.innerHTML='<div class="empty-msg">Nenhuma reserva cadastrada ainda.</div>';return;}
+    el.innerHTML=d.reservas.map(res=>`<div class="res-item"><div class="res-info"><div class="res-name">${res.nome}</div><div class="res-meta">${fmtDate(res.checkin)} → ${fmtDate(res.checkout)}${res.valor?` · R$ ${Number(res.valor).toLocaleString('pt-BR')}`:''}${res.wpp?` · 📱 ${res.wpp}`:''}${res.obs?`<br><em style="color:rgba(255,255,255,0.3)">${res.obs}</em>`:''}</div></div><span class="badge ${res.tipo==='manual'?'badge-manual':'badge-online'}">${res.tipo==='manual'?'Manual':'Online'}</span><button class="del-btn" onclick="delReserva(${res.id})">×</button></div>`).join('');
+  }catch(e){ el.innerHTML='<div class="empty-msg">Erro ao carregar reservas.</div>'; }
 }
 
-function fmtDate(s) {
-  if (!s) return '—';
-  const p = s.split('-');
-  return `${p[2]}/${p[1]}/${p[0]}`;
+async function salvarReserva(){
+  const nome=document.getElementById('nNome').value.trim(), checkin=document.getElementById('nIn').value, checkout=document.getElementById('nOut').value;
+  const errEl=document.getElementById('msgResErr'); errEl.classList.remove('show');
+  if(!nome||!checkin||!checkout){errEl.textContent='Preencha nome, check-in e check-out.';errEl.classList.add('show');return;}
+  try{
+    const r=await fetch(API+'/api/admin/reservas',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({nome,cpf:document.getElementById('nCpf').value,wpp:document.getElementById('nWpp').value,checkin,checkout,valor:document.getElementById('nValor').value||0,obs:document.getElementById('nObs').value})});
+    if(r.ok){ ['nNome','nCpf','nWpp','nValor','nIn','nOut','nObs'].forEach(id=>document.getElementById(id).value=''); await carregarDatas(); render(); switchTab('reservas'); const ok=document.getElementById('msgResOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
+    else{ const d=await r.json(); errEl.textContent=d.error||'Erro ao salvar.'; errEl.classList.add('show'); }
+  }catch(e){ errEl.textContent='Erro de conexão.'; errEl.classList.add('show'); }
 }
 
-async function carregarReservas() {
-  const el = document.getElementById('resList');
-  el.innerHTML = '<div class="loading">Carregando reservas...</div>';
-  try {
-    const r = await fetch(API + '/api/admin/reservas', { headers: admHeaders });
-    const d = await r.json();
-    if (!d.reservas || !d.reservas.length) {
-      el.innerHTML = '<div class="empty-msg">Nenhuma reserva cadastrada ainda.</div>'; return;
-    }
-    el.innerHTML = d.reservas.map(res => `
-      <div class="res-item">
-        <div class="res-info">
-          <div class="res-name">${res.nome}</div>
-          <div class="res-meta">
-            ${fmtDate(res.checkin)} → ${fmtDate(res.checkout)}
-            ${res.valor ? ` · R$ ${Number(res.valor).toLocaleString('pt-BR')}` : ''}
-            ${res.wpp ? ` · 📱 ${res.wpp}` : ''}
-            ${res.obs ? `<br><em style="color:rgba(255,255,255,0.3)">${res.obs}</em>` : ''}
-          </div>
-        </div>
-        <span class="badge ${res.tipo==='manual'?'badge-manual':'badge-online'}">${res.tipo==='manual'?'Manual':'Online'}</span>
-        <button class="del-btn" onclick="delReserva(${res.id})" title="Remover">×</button>
-      </div>`).join('');
-  } catch(e) { el.innerHTML = '<div class="empty-msg">Erro ao carregar reservas.</div>'; }
+async function delReserva(id){
+  if(!confirm('Remover esta reserva?')) return;
+  try{ await fetch(API+`/api/admin/reservas/${id}`,{method:'DELETE',headers:admHeaders}); await carregarDatas(); render(); carregarReservas(); }
+  catch(e){ alert('Erro ao remover.'); }
 }
 
-async function salvarReserva() {
-  const nome    = document.getElementById('nNome').value.trim();
-  const checkin = document.getElementById('nIn').value;
-  const checkout= document.getElementById('nOut').value;
-  const errEl   = document.getElementById('msgResErr');
-  errEl.classList.remove('show');
-  if (!nome || !checkin || !checkout) {
-    errEl.textContent = 'Preencha nome, check-in e check-out.';
-    errEl.classList.add('show'); return;
-  }
-  try {
-    const r = await fetch(API + '/api/admin/reservas', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json', ...admHeaders },
-      body: JSON.stringify({
-        nome,
-        cpf:     document.getElementById('nCpf').value,
-        wpp:     document.getElementById('nWpp').value,
-        checkin, checkout,
-        valor:   document.getElementById('nValor').value || 0,
-        obs:     document.getElementById('nObs').value
-      })
-    });
-    if (r.ok) {
-      ['nNome','nCpf','nWpp','nValor','nIn','nOut','nObs'].forEach(id => document.getElementById(id).value = '');
-      await carregarDatas();
-      render();
-      switchTab('reservas');
-      const ok = document.getElementById('msgResOk');
-      ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'), 3000);
-    } else {
-      const d = await r.json();
-      errEl.textContent = d.error || 'Erro ao salvar.'; errEl.classList.add('show');
-    }
-  } catch(e) { errEl.textContent = 'Erro de conexão.'; errEl.classList.add('show'); }
+async function carregarCampanhasAdm(){
+  const el=document.getElementById('campList'); el.innerHTML='<div class="loading">Carregando...</div>';
+  try{
+    const r=await fetch(API+'/api/admin/campanhas',{headers:admHeaders}); const d=await r.json();
+    if(!d.campanhas||!d.campanhas.length){el.innerHTML='<div class="empty-msg">Nenhuma campanha criada ainda.</div>';return;}
+    el.innerHTML=d.campanhas.map(c=>`<div class="camp-item"><div class="camp-header"><div class="camp-name">${c.titulo}</div><div class="camp-actions"><button class="toggle-btn ${c.ativa?'on':''}" onclick="toggleCamp(${c.id},${c.ativa?0:1})">${c.ativa?'✓ Ativa':'Inativa'}</button><button class="del-btn" onclick="delCamp(${c.id})">×</button></div></div><div class="camp-meta">${c.descricao||''} ${c.periodo?'· 📆 '+c.periodo:''} · <strong style="color:#e8a020">${c.preco}</strong> <span style="color:rgba(255,255,255,0.3)">${c.tipo_preco||''}</span></div></div>`).join('');
+  }catch(e){ el.innerHTML='<div class="empty-msg">Erro ao carregar campanhas.</div>'; }
 }
 
-async function delReserva(id) {
-  if (!confirm('Remover esta reserva?')) return;
-  try {
-    await fetch(API + `/api/admin/reservas/${id}`, { method:'DELETE', headers: admHeaders });
-    await carregarDatas();
-    render();
-    carregarReservas();
-  } catch(e) { alert('Erro ao remover.'); }
+async function salvarCamp(){
+  const titulo=document.getElementById('cTitulo').value.trim(), preco=document.getElementById('cPreco').value.trim();
+  const tipo=document.getElementById('cTipo').value, desc=document.getElementById('cDesc').value.trim(), periodo=document.getElementById('cPeriodo').value.trim();
+  if(!titulo||!preco){alert('Preencha título e valor.');return;}
+  try{
+    const r=await fetch(API+'/api/admin/campanhas',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({titulo,preco,tipo_preco:tipo,descricao:desc,periodo})});
+    if(r.ok){ ['cTitulo','cPreco','cDesc','cPeriodo'].forEach(id=>document.getElementById(id).value=''); await carregarCampanhasAdm(); await carregarCampanha(); const ok=document.getElementById('msgCampOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
+  }catch(e){ alert('Erro ao salvar campanha.'); }
 }
 
-async function carregarCampanhasAdm() {
-  const el = document.getElementById('campList');
-  el.innerHTML = '<div class="loading">Carregando...</div>';
-  try {
-    const r = await fetch(API + '/api/admin/campanhas', { headers: admHeaders });
-    const d = await r.json();
-    if (!d.campanhas || !d.campanhas.length) {
-      el.innerHTML = '<div class="empty-msg">Nenhuma campanha criada ainda.</div>'; return;
-    }
-    el.innerHTML = d.campanhas.map(c => `
-      <div class="camp-item">
-        <div class="camp-header">
-          <div class="camp-name">${c.titulo}</div>
-          <div class="camp-actions">
-            <button class="toggle-btn ${c.ativa?'on':''}" onclick="toggleCamp(${c.id},${c.ativa?0:1})">
-              ${c.ativa ? '✓ Ativa' : 'Inativa'}
-            </button>
-            <button class="del-btn" onclick="delCamp(${c.id})">×</button>
-          </div>
-        </div>
-        <div class="camp-meta">${c.descricao || ''} · <strong style="color:#e8a020">${c.preco}</strong></div>
-      </div>`).join('');
-  } catch(e) { el.innerHTML = '<div class="empty-msg">Erro ao carregar campanhas.</div>'; }
+async function toggleCamp(id,ativa){
+  try{ await fetch(API+`/api/admin/campanhas/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({ativa:ativa===1})}); await carregarCampanhasAdm(); await carregarCampanha(); }
+  catch(e){ alert('Erro ao atualizar campanha.'); }
 }
 
-async function salvarCamp() {
-  const titulo = document.getElementById('cTitulo').value.trim();
-  const preco  = document.getElementById('cPreco').value.trim();
-  const desc   = document.getElementById('cDesc').value.trim();
-  if (!titulo || !preco) { alert('Preencha título e preço.'); return; }
-  try {
-    const r = await fetch(API + '/api/admin/campanhas', {
-      method:'POST',
-      headers:{'Content-Type':'application/json', ...admHeaders},
-      body: JSON.stringify({ titulo, preco, descricao: desc })
-    });
-    if (r.ok) {
-      ['cTitulo','cPreco','cDesc'].forEach(id => document.getElementById(id).value = '');
-      await carregarCampanhasAdm();
-      await carregarCampanha();
-      const ok = document.getElementById('msgCampOk');
-      ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'), 3000);
-    }
-  } catch(e) { alert('Erro ao salvar campanha.'); }
+async function delCamp(id){
+  if(!confirm('Remover esta campanha?')) return;
+  try{ await fetch(API+`/api/admin/campanhas/${id}`,{method:'DELETE',headers:admHeaders}); await carregarCampanhasAdm(); await carregarCampanha(); }
+  catch(e){ alert('Erro ao remover.'); }
 }
 
-async function toggleCamp(id, ativa) {
-  try {
-    await fetch(API + `/api/admin/campanhas/${id}`, {
-      method:'PATCH',
-      headers:{'Content-Type':'application/json', ...admHeaders},
-      body: JSON.stringify({ ativa: ativa === 1 })
-    });
-    await carregarCampanhasAdm();
-    await carregarCampanha();
-  } catch(e) { alert('Erro ao atualizar campanha.'); }
-}
-
-async function delCamp(id) {
-  if (!confirm('Remover esta campanha?')) return;
-  try {
-    await fetch(API + `/api/admin/campanhas/${id}`, { method:'DELETE', headers: admHeaders });
-    await carregarCampanhasAdm();
-    await carregarCampanha();
-  } catch(e) { alert('Erro ao remover campanha.'); }
-}
-
-// ── Init ──────────────────────────────────────────────────────────────────────
 initCal();
 carregarCampanha();
 </script>
