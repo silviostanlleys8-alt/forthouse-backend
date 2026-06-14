@@ -16,29 +16,26 @@ const db = createClient({
 async function initDB() {
   await db.execute(`CREATE TABLE IF NOT EXISTS reservas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    cpf TEXT,
-    wpp TEXT,
-    checkin TEXT NOT NULL,
-    checkout TEXT NOT NULL,
-    valor REAL DEFAULT 0,
-    tipo TEXT DEFAULT 'manual',
-    obs TEXT,
+    nome TEXT NOT NULL, cpf TEXT, wpp TEXT,
+    checkin TEXT NOT NULL, checkout TEXT NOT NULL,
+    valor REAL DEFAULT 0, tipo TEXT DEFAULT 'manual', obs TEXT,
     criado_em TEXT DEFAULT (datetime('now'))
   )`);
-  await db.execute(`CREATE TABLE IF NOT EXISTS campanhas (
+
+  await db.execute(`CREATE TABLE IF NOT EXISTS promocoes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo TEXT NOT NULL,
     descricao TEXT,
     preco TEXT,
     tipo_preco TEXT DEFAULT 'por noite',
     periodo TEXT,
-    ativa INTEGER DEFAULT 1,
+    status TEXT DEFAULT 'ativa',
     criado_em TEXT DEFAULT (datetime('now'))
   )`);
-  // Migração: adiciona colunas novas se não existirem
-  try { await db.execute(`ALTER TABLE campanhas ADD COLUMN tipo_preco TEXT DEFAULT 'por noite'`); } catch(e) {}
-  try { await db.execute(`ALTER TABLE campanhas ADD COLUMN periodo TEXT`); } catch(e) {}
+
+  // migração segura: adicionar coluna status se não existir (tabela campanhas antiga)
+  try { await db.execute(`ALTER TABLE promocoes ADD COLUMN status TEXT DEFAULT 'ativa'`); } catch(e){}
+
   console.log('Banco iniciado com sucesso!');
 }
 
@@ -46,12 +43,11 @@ const ADMIN_USER = 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || '86951519SJJ';
 
 function authAdmin(req, res, next) {
-  const user = req.headers['user'];
-  const pass = req.headers['pass'];
-  if (user === ADMIN_USER && pass === ADMIN_PASS) return next();
+  if (req.headers['user'] === ADMIN_USER && req.headers['pass'] === ADMIN_PASS) return next();
   return res.status(401).json({ error: 'Não autorizado' });
 }
 
+// ── Rotas públicas ────────────────────────────────────────────────────────────
 app.post('/api/login', (req, res) => {
   const { user, pass } = req.body;
   if (user === ADMIN_USER && pass === ADMIN_PASS) return res.json({ ok: true });
@@ -65,106 +61,77 @@ app.get('/api/datas-ocupadas', async (req, res) => {
     result.rows.forEach(r => {
       let d = new Date(r.checkin + 'T12:00:00');
       const fim = new Date(r.checkout + 'T12:00:00');
-      while (d < fim) {
-        datas.push(d.toISOString().split('T')[0]);
-        d.setDate(d.getDate() + 1);
-      }
+      while (d < fim) { datas.push(d.toISOString().split('T')[0]); d.setDate(d.getDate() + 1); }
     });
     res.json({ datas });
-  } catch (e) {
-    console.error('datas-ocupadas:', e.message);
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.get('/api/campanhas/ativas', async (req, res) => {
+// Promoção ativa para o banner
+app.get('/api/promocoes/ativa', async (req, res) => {
   try {
-    const result = await db.execute('SELECT * FROM campanhas WHERE ativa = 1 ORDER BY id DESC LIMIT 1');
-    res.json({ campanha: result.rows[0] || null });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+    const result = await db.execute(`SELECT * FROM promocoes WHERE status = 'ativa' ORDER BY id DESC LIMIT 1`);
+    res.json({ promocao: result.rows[0] || null });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+// Todas as promoções para o quadro de avisos (públicas)
+app.get('/api/promocoes', async (req, res) => {
+  try {
+    const result = await db.execute('SELECT * FROM promocoes ORDER BY id DESC');
+    res.json({ promocoes: result.rows });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// ── Rotas admin ───────────────────────────────────────────────────────────────
 app.get('/api/admin/reservas', authAdmin, async (req, res) => {
-  try {
-    const result = await db.execute('SELECT * FROM reservas ORDER BY checkin ASC');
-    res.json({ reservas: result.rows });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  try { res.json({ reservas: (await db.execute('SELECT * FROM reservas ORDER BY checkin ASC')).rows }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.post('/api/admin/reservas', authAdmin, async (req, res) => {
   const { nome, cpf, wpp, checkin, checkout, valor, obs } = req.body;
   if (!nome || !checkin || !checkout) return res.status(400).json({ error: 'Nome, check-in e check-out são obrigatórios' });
   try {
-    await db.execute({
-      sql: 'INSERT INTO reservas (nome, cpf, wpp, checkin, checkout, valor, tipo, obs) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, 'manual', obs||'']
-    });
+    await db.execute({ sql: 'INSERT INTO reservas (nome,cpf,wpp,checkin,checkout,valor,tipo,obs) VALUES (?,?,?,?,?,?,?,?)', args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, 'manual', obs||''] });
     res.json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.delete('/api/admin/reservas/:id', authAdmin, async (req, res) => {
-  try {
-    await db.execute({ sql: 'DELETE FROM reservas WHERE id = ?', args: [req.params.id] });
-    res.json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  try { await db.execute({ sql: 'DELETE FROM reservas WHERE id = ?', args: [req.params.id] }); res.json({ ok: true }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.get('/api/admin/campanhas', authAdmin, async (req, res) => {
-  try {
-    const result = await db.execute('SELECT * FROM campanhas ORDER BY id DESC');
-    res.json({ campanhas: result.rows });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+// CRUD promoções admin
+app.get('/api/admin/promocoes', authAdmin, async (req, res) => {
+  try { res.json({ promocoes: (await db.execute('SELECT * FROM promocoes ORDER BY id DESC')).rows }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.post('/api/admin/campanhas', authAdmin, async (req, res) => {
+app.post('/api/admin/promocoes', authAdmin, async (req, res) => {
   const { titulo, descricao, preco, tipo_preco, periodo } = req.body;
   if (!titulo || !preco) return res.status(400).json({ error: 'Título e preço obrigatórios' });
   try {
-    await db.execute({
-      sql: 'INSERT INTO campanhas (titulo, descricao, preco, tipo_preco, periodo, ativa) VALUES (?, ?, ?, ?, ?, 1)',
-      args: [titulo, descricao||'', preco, tipo_preco||'por noite', periodo||'']
-    });
+    await db.execute({ sql: 'INSERT INTO promocoes (titulo,descricao,preco,tipo_preco,periodo,status) VALUES (?,?,?,?,?,?)', args: [titulo, descricao||'', preco, tipo_preco||'por noite', periodo||'', 'ativa'] });
     res.json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.patch('/api/admin/campanhas/:id', authAdmin, async (req, res) => {
-  const { ativa } = req.body;
-  try {
-    await db.execute({ sql: 'UPDATE campanhas SET ativa = ? WHERE id = ?', args: [ativa ? 1 : 0, req.params.id] });
-    res.json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+app.patch('/api/admin/promocoes/:id', authAdmin, async (req, res) => {
+  const { status } = req.body;
+  try { await db.execute({ sql: 'UPDATE promocoes SET status = ? WHERE id = ?', args: [status, req.params.id] }); res.json({ ok: true }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.delete('/api/admin/campanhas/:id', authAdmin, async (req, res) => {
-  try {
-    await db.execute({ sql: 'DELETE FROM campanhas WHERE id = ?', args: [req.params.id] });
-    res.json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+app.delete('/api/admin/promocoes/:id', authAdmin, async (req, res) => {
+  try { await db.execute({ sql: 'DELETE FROM promocoes WHERE id = ?', args: [req.params.id] }); res.json({ ok: true }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+app.get('*', (req, res) => { res.sendFile(path.join(__dirname, 'public', 'index.html')); });
 
 const PORT = process.env.PORT || 3000;
 initDB()
   .then(() => app.listen(PORT, () => console.log(`Forthouse rodando na porta ${PORT}`)))
-  .catch(err => { console.error('Erro ao iniciar banco:', err); process.exit(1); });
+  .catch(err => { console.error('Erro:', err); process.exit(1); });
