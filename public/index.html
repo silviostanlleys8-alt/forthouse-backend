@@ -6,6 +6,21 @@
   <title>Forthouse — Casa de Praia · Ilha de Itamaracá</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
+    /* LOADING SCREEN */
+    #loadingScreen{position:fixed;inset:0;background:#0d1b3e;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease}
+    #loadingScreen.hide{opacity:0;pointer-events:none}
+    .ls-logo{font-family:'Georgia',serif;font-size:36px;margin-bottom:12px}
+    .ls-logo .fort{color:#e8a020}.ls-logo .house{color:#5b9ee1}
+    .ls-sub{font-family:sans-serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:40px}
+    .ls-bar-wrap{width:160px;height:2px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden}
+    .ls-bar{height:100%;width:0%;background:linear-gradient(90deg,#e8a020,#f0c060);border-radius:2px;animation:loadbar 2.2s ease forwards}
+    @keyframes loadbar{0%{width:0%}60%{width:75%}85%{width:90%}100%{width:100%}}
+    .ls-msg{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.25);margin-top:16px;letter-spacing:1px}
+    .ls-wave{display:flex;gap:5px;margin-top:24px}
+    .ls-wave span{width:6px;height:6px;border-radius:50%;background:#e8a020;animation:wave .9s ease-in-out infinite}
+    .ls-wave span:nth-child(2){animation-delay:.15s;background:#c89018}
+    .ls-wave span:nth-child(3){animation-delay:.3s;background:#5b9ee1}
+    @keyframes wave{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}}
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Georgia',serif;background:#0d1b3e;color:#fff;min-height:100vh}
     .navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:0.5px solid rgba(255,255,255,0.08);background:#0d1b3e;position:sticky;top:0;z-index:50}
@@ -236,6 +251,32 @@
   </style>
 </head>
 <body>
+
+<!-- TELA DE LOADING -->
+<div id="loadingScreen">
+  <div class="ls-logo"><span class="fort">fort</span><span class="house">house</span></div>
+  <div class="ls-sub">casa de praia</div>
+  <div class="ls-bar-wrap"><div class="ls-bar"></div></div>
+  <div class="ls-msg">Carregando sua experiência...</div>
+  <div class="ls-wave"><span></span><span></span><span></span></div>
+</div>
+
+<!-- Script de loading: some quando tudo carregar -->
+<script>
+  window.addEventListener('load', function() {
+    // Aguarda no mínimo 1.5s para a barra completar
+    setTimeout(function() {
+      const ls = document.getElementById('loadingScreen');
+      ls.classList.add('hide');
+      setTimeout(() => ls.style.display = 'none', 700);
+    }, 1800);
+  });
+  // Fallback: remove após 5s de qualquer forma
+  setTimeout(function() {
+    const ls = document.getElementById('loadingScreen');
+    if (ls) { ls.classList.add('hide'); setTimeout(() => ls.style.display = 'none', 700); }
+  }, 5000);
+</script>
 
 <div id="promoBanner">
   <button class="pb-close" onclick="fecharBanner()">×</button>
