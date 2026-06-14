@@ -33,6 +33,16 @@ async function initDB() {
     criado_em TEXT DEFAULT (datetime('now'))
   )`);
 
+  await db.execute(`CREATE TABLE IF NOT EXISTS periodos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    data_inicio TEXT NOT NULL,
+    data_fim TEXT NOT NULL,
+    valor REAL NOT NULL,
+    tipo TEXT DEFAULT 'diaria',
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`);
+
   // migração segura: adicionar coluna status se não existir (tabela campanhas antiga)
   try { await db.execute(`ALTER TABLE promocoes ADD COLUMN status TEXT DEFAULT 'ativa'`); } catch(e){}
   // migração: coluna sinal nas reservas
@@ -141,6 +151,34 @@ app.patch('/api/admin/promocoes/:id', authAdmin, async (req, res) => {
 app.delete('/api/admin/promocoes/:id', authAdmin, async (req, res) => {
   try { await db.execute({ sql: 'DELETE FROM promocoes WHERE id = ?', args: [req.params.id] }); res.json({ ok: true }); }
   catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// ── Preços / Períodos ────────────────────────────────────────────────────────
+// Público: retorna todos os períodos para calcular preço no calendário
+app.get('/api/periodos', async (req, res) => {
+  try {
+    const result = await db.execute('SELECT * FROM periodos ORDER BY data_inicio ASC');
+    res.json({ periodos: result.rows });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/admin/periodos', authAdmin, async (req, res) => {
+  const { nome, data_inicio, data_fim, valor, tipo } = req.body;
+  if (!nome || !data_inicio || !data_fim || !valor) return res.status(400).json({ error: 'Campos obrigatórios ausentes' });
+  try {
+    await db.execute({
+      sql: 'INSERT INTO periodos (nome, data_inicio, data_fim, valor, tipo) VALUES (?,?,?,?,?)',
+      args: [nome, data_inicio, data_fim, valor, tipo || 'diaria']
+    });
+    res.json({ ok: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/admin/periodos/:id', authAdmin, async (req, res) => {
+  try {
+    await db.execute({ sql: 'DELETE FROM periodos WHERE id = ?', args: [req.params.id] });
+    res.json({ ok: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname, 'public', 'index.html')); });
