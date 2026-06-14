@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Forthouse — Casa de Praia · Ilha de Itamaracá</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Georgia',serif;background:#0d1b3e;color:#fff;min-height:100vh}
-
-    /* NAVBAR */
     .navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:0.5px solid rgba(255,255,255,0.08);background:#0d1b3e;position:sticky;top:0;z-index:50}
     .nav-brand .fort{color:#e8a020;font-size:22px;font-weight:bold;letter-spacing:1px}
     .nav-brand .house{color:#5b9ee1;font-size:22px;font-weight:bold;letter-spacing:1px}
@@ -20,8 +19,6 @@
     .nav-admin-btn{background:transparent;color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.2);padding:9px 16px;font-size:12px;cursor:pointer;border-radius:2px;font-family:sans-serif}
     .nav-admin-btn:hover{color:#e8a020;border-color:#e8a020}
     .nav-cta{background:#e8a020;color:#0d1b3e;border:none;padding:10px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif}
-
-    /* BANNER PROMOÇÃO */
     #promoBanner{display:none;position:relative}
     #promoBanner.ativa{display:block}
     .pb-bg{background:#0a1628;border-bottom:3px solid #e8a020}
@@ -40,8 +37,6 @@
     .pb-preco-tipo{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:14px}
     .pb-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 22px;font-size:12px;font-weight:bold;letter-spacing:1.5px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%}
     .pb-close{position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,0.3);font-size:20px;cursor:pointer;z-index:2}
-
-    /* HERO */
     .hero{position:relative;min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:56px;text-align:center;overflow:hidden}
     .hero-bg{position:absolute;inset:0;background-image:url('logo.jpg');background-size:cover;background-position:center top;filter:brightness(0.38)}
     .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,27,62,0.1) 0%,rgba(13,27,62,0.6) 65%,rgba(13,27,62,1) 100%)}
@@ -55,20 +50,14 @@
     .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     .btn-primary{background:#e8a020;color:#0d1b3e;border:none;padding:15px 34px;font-size:13px;font-weight:bold;letter-spacing:2px;cursor:pointer;border-radius:2px;text-transform:uppercase;font-family:sans-serif}
     .btn-secondary{background:transparent;color:#fff;border:1.5px solid #fff;padding:15px 34px;font-size:13px;font-weight:bold;letter-spacing:2px;cursor:pointer;border-radius:2px;text-transform:uppercase;font-family:sans-serif}
-
-    /* FEATURES */
     .features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-bottom:0.5px solid rgba(255,255,255,0.06)}
     .feat{padding:32px 28px;background:#0d1b3e;text-align:center}
     .feat-icon{width:44px;height:44px;border-radius:50%;border:0.5px solid rgba(232,160,32,0.35);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:20px}
     .feat h3{font-size:15px;font-weight:normal;color:#fff;margin-bottom:8px}
     .feat p{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7}
-
-    /* DIVIDER */
     .divider{display:flex;align-items:center;gap:20px;padding:40px 40px 0;max-width:700px;margin:0 auto}
     .div-line{flex:1;height:0.5px;background:rgba(255,255,255,0.08)}
     .div-text{color:rgba(255,255,255,0.2);font-size:10px;letter-spacing:3px;text-transform:uppercase;white-space:nowrap;font-family:sans-serif}
-
-    /* CALENDÁRIO */
     .availability{padding:48px 40px;max-width:700px;margin:0 auto}
     .section-label{font-family:sans-serif;font-size:10px;letter-spacing:4px;color:#e8a020;text-transform:uppercase;margin-bottom:12px}
     .section-title{font-size:26px;font-weight:normal;margin-bottom:28px;color:#fff}
@@ -97,8 +86,6 @@
     .cal-result.show{display:block}
     .cal-result-text{font-family:sans-serif;font-size:13px;color:#e8a020;margin-bottom:12px;line-height:1.6}
     .cal-reserve-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;width:100%;text-transform:uppercase;font-family:sans-serif}
-
-    /* QUADRO DE AVISOS */
     .avisos-section{padding:48px 40px;border-top:0.5px solid rgba(255,255,255,0.06);max-width:700px;margin:0 auto}
     .avisos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .aviso-card{border-radius:4px;padding:18px 20px;position:relative;overflow:hidden}
@@ -122,12 +109,8 @@
     .aviso-desc{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;line-height:1.5}
     .aviso-reservar{margin-top:12px;background:#e8a020;color:#0d1b3e;border:none;padding:8px 16px;font-size:11px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase}
     .aviso-encerrado-tag{position:absolute;top:12px;right:12px;font-family:sans-serif;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.2);text-transform:uppercase;border:0.5px solid rgba(255,255,255,0.1);padding:2px 8px;border-radius:2px}
-
-    /* FOOTER */
     .footer-strip{padding:24px 40px;border-top:0.5px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
     .footer-wpp{display:flex;align-items:center;gap:8px;background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.25);padding:10px 18px;border-radius:2px;font-family:sans-serif;font-size:12px;color:#25D366;letter-spacing:0.5px;text-decoration:none}
-
-    /* ADMIN */
     #adminOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;overflow-y:auto;padding:32px 16px}
     #adminOverlay.open{display:block}
     .admin-box{background:#0d1b3e;border:0.5px solid rgba(255,255,255,0.12);border-radius:6px;max-width:720px;margin:0 auto;padding:28px}
@@ -146,14 +129,28 @@
     .form-group textarea{resize:vertical;min-height:60px}
     .save-btn{background:#e8a020;color:#0d1b3e;border:none;padding:12px 24px;font-size:13px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:2px;font-family:sans-serif;text-transform:uppercase;width:100%;margin-top:16px}
     .cancel-btn{background:transparent;color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.15);padding:10px 20px;font-size:12px;cursor:pointer;border-radius:2px;font-family:sans-serif;width:100%;margin-top:8px}
-    .res-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .res-info{flex:1}.res-name{font-size:14px;color:#fff;margin-bottom:3px}
-    .res-meta{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6}
-    .badge{font-family:sans-serif;font-size:10px;padding:3px 10px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+
+    /* RESERVA CARD NO ADMIN */
+    .res-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:14px;margin-bottom:8px}
+    .res-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .res-info{flex:1}
+    .res-name{font-size:15px;color:#fff;margin-bottom:4px;font-weight:normal}
+    .res-meta{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.7}
+    .res-right{display:flex;gap:6px;align-items:center;flex-shrink:0}
+    .badge{font-family:sans-serif;font-size:10px;padding:3px 10px;border-radius:10px;white-space:nowrap}
     .badge-manual{background:rgba(232,160,32,0.15);color:#e8a020;border:0.5px solid rgba(232,160,32,0.3)}
     .badge-online{background:rgba(91,158,225,0.15);color:#5b9ee1;border:0.5px solid rgba(91,158,225,0.3)}
-    .del-btn{background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;font-size:18px;line-height:1;flex-shrink:0;padding:0 4px}
-    .del-btn:hover{color:#e55}
+
+    /* BOTÕES DE AÇÃO DA RESERVA */
+    .res-actions{display:flex;gap:8px;border-top:0.5px solid rgba(255,255,255,0.06);padding-top:10px}
+    .res-action-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:2px;border:0.5px solid;cursor:pointer;font-family:sans-serif;font-size:11px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;transition:all .15s;background:none}
+    .btn-pdf{border-color:rgba(232,160,32,0.4);color:#e8a020}
+    .btn-pdf:hover{background:rgba(232,160,32,0.1)}
+    .btn-wpp{border-color:rgba(37,211,102,0.4);color:#25D366}
+    .btn-wpp:hover{background:rgba(37,211,102,0.1)}
+    .btn-del{border-color:rgba(220,50,50,0.3);color:#f66;margin-left:auto}
+    .btn-del:hover{background:rgba(220,50,50,0.1)}
+
     .promo-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:14px;margin-bottom:8px}
     .promo-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
     .promo-name{font-size:14px;color:#fff;margin-bottom:3px}
@@ -163,6 +160,8 @@
     .status-btn.ativa{border-color:rgba(232,160,32,0.4);color:#e8a020;background:rgba(232,160,32,0.08)}
     .status-btn.em_breve{border-color:rgba(91,158,225,0.4);color:#5b9ee1;background:rgba(91,158,225,0.08)}
     .status-btn.encerrada{border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.25)}
+    .del-btn{background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;font-size:18px;line-height:1;flex-shrink:0;padding:0 4px}
+    .del-btn:hover{color:#e55}
     .msg-ok{background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.25);color:#25D366;font-family:sans-serif;font-size:12px;padding:10px 14px;border-radius:2px;margin-bottom:12px;display:none}
     .msg-ok.show{display:block}
     .msg-err{background:rgba(220,50,50,0.1);border:0.5px solid rgba(220,50,50,0.3);color:#f66;font-family:sans-serif;font-size:12px;padding:10px 14px;border-radius:2px;margin-bottom:12px;display:none}
@@ -171,29 +170,24 @@
     .loading{font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:20px}
     .sec-sep{border-top:0.5px solid rgba(255,255,255,0.08);margin-top:20px;padding-top:20px}
     .hint{font-family:sans-serif;font-size:11px;color:rgba(255,255,255,0.25);margin-top:6px;line-height:1.5}
-
     @media(max-width:600px){
       .navbar{padding:14px 16px}.nav-links{display:none}
       .hero h1{font-size:28px}.features{grid-template-columns:1fr}
-      .avisos-grid{grid-template-columns:1fr}
-      .availability,.avisos-section{padding:32px 16px}
+      .avisos-grid{grid-template-columns:1fr}.availability,.avisos-section{padding:32px 16px}
       .form-row{grid-template-columns:1fr}.divider{padding:32px 16px 0}
       .footer-strip{flex-direction:column;gap:16px;text-align:center}
       .pb-inner{flex-direction:column}.pb-right{min-width:unset;padding:14px 20px}
+      .res-actions{flex-wrap:wrap}
     }
   </style>
 </head>
 <body>
 
-<!-- BANNER PROMOÇÃO ATIVA -->
 <div id="promoBanner">
   <button class="pb-close" onclick="fecharBanner()">×</button>
   <div class="pb-bg">
     <div class="pb-inner">
-      <div class="pb-left">
-        <div class="pb-left-icon">🏖️</div>
-        <div class="pb-left-label">Promoção</div>
-      </div>
+      <div class="pb-left"><div class="pb-left-icon">🏖️</div><div class="pb-left-label">Promoção</div></div>
       <div class="pb-center">
         <div class="pb-tag">Oferta por tempo limitado</div>
         <div class="pb-title" id="pbTitle"></div>
@@ -210,7 +204,6 @@
   </div>
 </div>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div>
     <div class="nav-brand"><span class="fort">fort</span><span class="house">house</span></div>
@@ -227,7 +220,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -242,14 +234,12 @@
   </div>
 </section>
 
-<!-- FEATURES -->
 <div class="features">
   <div class="feat"><div class="feat-icon">📅</div><h3>Reserva online</h3><p>Veja as datas disponíveis e reserve de forma rápida e segura, sem burocracia.</p></div>
   <div class="feat"><div class="feat-icon">🔒</div><h3>Pagamento seguro</h3><p>Apenas 20% de entrada para confirmar. O restante é pago na entrega das chaves.</p></div>
   <div class="feat"><div class="feat-icon">💬</div><h3>Suporte direto</h3><p>Atendimento pelo WhatsApp. Confirme sua reserva direto com o proprietário.</p></div>
 </div>
 
-<!-- CALENDÁRIO -->
 <div class="divider"><div class="div-line"></div><div class="div-text">Disponibilidade</div><div class="div-line"></div></div>
 <section class="availability" id="secCal">
   <div class="section-label">Calendário</div>
@@ -275,17 +265,13 @@
   </div>
 </section>
 
-<!-- QUADRO DE AVISOS / PROMOÇÕES -->
 <div class="divider"><div class="div-line"></div><div class="div-text">Promoções</div><div class="div-line"></div></div>
 <section class="avisos-section" id="secAvisos">
   <div class="section-label">Quadro de avisos</div>
   <div class="section-title">Promoções e ofertas</div>
-  <div class="avisos-grid" id="avisosGrid">
-    <div class="loading">Carregando promoções...</div>
-  </div>
+  <div class="avisos-grid" id="avisosGrid"><div class="loading">Carregando promoções...</div></div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer-strip">
   <div>
     <div style="font-family:'Georgia',serif;font-size:18px"><span style="color:#e8a020">fort</span><span style="color:#5b9ee1">house</span></div>
@@ -297,11 +283,9 @@
   </a>
 </footer>
 
-<!-- ADMIN OVERLAY -->
+<!-- ADMIN -->
 <div id="adminOverlay">
   <div class="admin-box">
-
-    <!-- LOGIN -->
     <div id="adminLogin">
       <div class="admin-header">
         <h2>🔒 Painel administrativo</h2>
@@ -314,8 +298,6 @@
         <button class="save-btn" onclick="loginAdm()">Entrar</button>
       </div>
     </div>
-
-    <!-- PAINEL -->
     <div id="adminPanel" style="display:none">
       <div class="admin-header">
         <h2>⚙️ Painel administrativo</h2>
@@ -327,13 +309,11 @@
         <button class="atab" onclick="switchTab('promocoes')">Promoções</button>
       </div>
 
-      <!-- ABA RESERVAS -->
       <div id="tabReservas">
         <div class="msg-ok" id="msgResOk">✓ Reserva salva com sucesso!</div>
         <div id="resList"><div class="loading">Carregando...</div></div>
       </div>
 
-      <!-- ABA NOVA RESERVA -->
       <div id="tabNova" style="display:none">
         <div class="msg-err" id="msgResErr"></div>
         <div class="form-row">
@@ -353,11 +333,9 @@
         <button class="cancel-btn" onclick="switchTab('reservas')">Cancelar</button>
       </div>
 
-      <!-- ABA PROMOÇÕES -->
       <div id="tabPromocoes" style="display:none">
         <div class="msg-ok" id="msgPromoOk">✓ Promoção salva!</div>
         <div id="promoList"><div class="loading">Carregando...</div></div>
-
         <div class="sec-sep">
           <p style="font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:14px">✦ Nova promoção</p>
           <div class="form-row">
@@ -377,20 +355,19 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Descrição</label><input type="text" id="pDesc" placeholder="Ex: Inclui 5 noites, estacionamento e acesso à praia"></div>
+            <div class="form-group"><label>Descrição</label><input type="text" id="pDesc" placeholder="Ex: Inclui 5 noites e estacionamento"></div>
             <div class="form-group"><label>Status inicial</label>
               <select id="pStatus">
-                <option value="ativa">🟡 Ativa — aparece no banner e no quadro</option>
-                <option value="em_breve">🔵 Em breve — aparece no quadro</option>
-                <option value="encerrada">⚫ Encerrada — aparece como encerrada</option>
+                <option value="ativa">🟡 Ativa</option>
+                <option value="em_breve">🔵 Em breve</option>
+                <option value="encerrada">⚫ Encerrada</option>
               </select>
             </div>
           </div>
-          <p class="hint">💡 Promoções <strong>ativas</strong> aparecem no banner do topo e no quadro. <strong>Em breve</strong> só aparece no quadro. <strong>Encerradas</strong> ficam no quadro riscadas, mostrando o histórico aos visitantes.</p>
+          <p class="hint">💡 Promoções <strong>ativas</strong> aparecem no banner do topo e no quadro. <strong>Em breve</strong> só aparece no quadro. <strong>Encerradas</strong> ficam no histórico riscadas.</p>
           <button class="save-btn" onclick="salvarPromo()">📢 Publicar promoção</button>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -401,11 +378,9 @@ const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agos
 let cy,cm,s1=null,s2=null,datasOcupadas=[],admHeaders={};
 
 function initCal(){ const h=new Date(); cy=h.getFullYear(); cm=h.getMonth(); carregarDatas().then(render); }
-
 async function carregarDatas(){
   try{ const r=await fetch(API+'/api/datas-ocupadas'); const d=await r.json(); datasOcupadas=d.datas||[]; }catch(e){ datasOcupadas=[]; }
 }
-
 function isOcc(y,m,d){ return datasOcupadas.includes(`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`); }
 function isPast(y,m,d){ const h=new Date(); h.setHours(0,0,0,0); return new Date(y,m,d)<h; }
 function fmt(a){ return `${String(a[2]).padStart(2,'0')}/${String(a[1]+1).padStart(2,'0')}/${a[0]}`; }
@@ -460,14 +435,267 @@ function abrirWpp(){
   window.open(`https://wa.me/${WPP}?text=${msg}`,'_blank');
 }
 
-// ── PROMOÇÕES públicas ────────────────────────────────────────────────────────
+// ── TICKET PDF ────────────────────────────────────────────────────────────────
+function gerarTicketPDF(res) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const W = 210, navy = [13,27,62], gold = [232,160,32], white = [255,255,255], gray = [180,180,190];
+
+  // Fundo azul escuro
+  doc.setFillColor(...navy);
+  doc.rect(0, 0, W, 297, 'F');
+
+  // Topo dourado
+  doc.setFillColor(...gold);
+  doc.rect(0, 0, W, 2, 'F');
+
+  // Header
+  doc.setFillColor(10, 20, 50);
+  doc.rect(0, 0, W, 52, 'F');
+  doc.setFillColor(...gold);
+  doc.rect(0, 50, W, 2, 'F');
+
+  // Nome da empresa
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(28);
+  doc.setTextColor(...gold);
+  doc.text('fort', 20, 28);
+  const fw = doc.getTextWidth('fort');
+  doc.setTextColor(91, 158, 225);
+  doc.text('house', 20 + fw, 28);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.setCharSpace(3);
+  doc.text('CASA DE PRAIA', 20, 36);
+  doc.setCharSpace(0);
+  doc.text('Ilha de Itamara\u00e1 \u2022 Pernambuco', 20, 42);
+
+  // Ticket label no canto
+  doc.setFillColor(...gold);
+  doc.roundedRect(W - 55, 14, 40, 12, 2, 2, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(...navy);
+  doc.setCharSpace(1.5);
+  doc.text('TICKET', W - 35, 22, { align: 'center' });
+  doc.setCharSpace(0);
+
+  // Número da reserva
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.text(`Reserva #${String(res.id).padStart(4,'0')}`, W - 35, 32, { align: 'center' });
+
+  // Título seção hóspede
+  doc.setFillColor(20, 35, 75);
+  doc.rect(0, 54, W, 10, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7);
+  doc.setTextColor(...gold);
+  doc.setCharSpace(2);
+  doc.text('DADOS DO HÓSPEDE', 20, 61);
+  doc.setCharSpace(0);
+
+  // Dados do hóspede
+  let y = 74;
+  const col1 = 20, col2 = 115;
+  const campo = (label, valor, x, yy) => {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...gray);
+    doc.text(label.toUpperCase(), x, yy);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(...white);
+    doc.text(valor || '—', x, yy + 7);
+  };
+
+  campo('Nome completo', res.nome, col1, y);
+  campo('CPF', res.cpf || '—', col2, y);
+  y += 22;
+  campo('WhatsApp', res.wpp || '—', col1, y);
+  campo('Tipo de reserva', res.tipo === 'manual' ? 'Reserva manual' : 'Reserva online', col2, y);
+
+  // Separador
+  y += 22;
+  doc.setDrawColor(...gold);
+  doc.setLineWidth(0.3);
+  doc.setLineDash([2, 2], 0);
+  doc.line(20, y, W - 20, y);
+  doc.setLineDash([], 0);
+
+  // Título seção datas
+  y += 12;
+  doc.setFillColor(20, 35, 75);
+  doc.rect(0, y - 6, W, 10, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7);
+  doc.setTextColor(...gold);
+  doc.setCharSpace(2);
+  doc.text('DETALHES DA ESTADIA', 20, y + 1);
+  doc.setCharSpace(0);
+  y += 16;
+
+  // Datas em destaque
+  const fmtD = s => { if(!s) return '—'; const p=s.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; };
+  const cin = fmtD(res.checkin), cout = fmtD(res.checkout);
+
+  // Box check-in
+  doc.setFillColor(20, 35, 80);
+  doc.roundedRect(col1, y - 5, 75, 32, 3, 3, 'F');
+  doc.setDrawColor(...gold);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(col1, y - 5, 75, 32, 3, 3, 'S');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(...gray);
+  doc.text('CHECK-IN', col1 + 37.5, y + 2, { align: 'center' });
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(...gold);
+  doc.text(cin, col1 + 37.5, y + 14, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.text('a partir das 14h', col1 + 37.5, y + 21, { align: 'center' });
+
+  // Seta
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(...gold);
+  doc.text('>', col1 + 80, y + 11, { align: 'center' });
+
+  // Box check-out
+  doc.setFillColor(20, 35, 80);
+  doc.roundedRect(col2, y - 5, 75, 32, 3, 3, 'F');
+  doc.setDrawColor(91, 158, 225);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(col2, y - 5, 75, 32, 3, 3, 'S');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(...gray);
+  doc.text('CHECK-OUT', col2 + 37.5, y + 2, { align: 'center' });
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(91, 158, 225);
+  doc.text(cout, col2 + 37.5, y + 14, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...gray);
+  doc.text('até as 12h', col2 + 37.5, y + 21, { align: 'center' });
+
+  y += 42;
+
+  // Calcular noites
+  let noites = '—';
+  if (res.checkin && res.checkout) {
+    const a = new Date(res.checkin + 'T12:00'), b = new Date(res.checkout + 'T12:00');
+    noites = Math.round((b - a) / 86400000);
+  }
+
+  // Linha de resumo financeiro
+  doc.setFillColor(20, 35, 75);
+  doc.rect(0, y, W, 10, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7);
+  doc.setTextColor(...gold);
+  doc.setCharSpace(2);
+  doc.text('RESUMO FINANCEIRO', 20, y + 7);
+  doc.setCharSpace(0);
+  y += 20;
+
+  const finRow = (label, valor, destaque) => {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...gray);
+    doc.text(label, col1, y);
+    doc.setFont('helvetica', destaque ? 'bold' : 'normal');
+    doc.setFontSize(destaque ? 13 : 10);
+    doc.setTextColor(...(destaque ? gold : white));
+    doc.text(valor, W - 20, y, { align: 'right' });
+    y += destaque ? 10 : 8;
+  };
+
+  finRow(`Diárias (${noites} noite${noites !== 1 ? 's' : ''})`, '—', false);
+  const valNum = Number(res.valor) || 0;
+  const entrada = Math.round(valNum * 0.2);
+  const restante = valNum - entrada;
+  if (valNum > 0) {
+    finRow('Total da reserva', `R$ ${valNum.toLocaleString('pt-BR')}`, false);
+    finRow('Entrada paga (20%)', `R$ ${entrada.toLocaleString('pt-BR')}`, false);
+    y += 2;
+    doc.setDrawColor(...gold);
+    doc.setLineWidth(0.3);
+    doc.line(col1, y, W - 20, y);
+    y += 6;
+    finRow('Saldo na entrega das chaves', `R$ ${restante.toLocaleString('pt-BR')}`, true);
+  } else {
+    finRow('Valor total', 'A confirmar', false);
+  }
+
+  // Observações
+  if (res.obs) {
+    y += 6;
+    doc.setFillColor(20, 35, 75);
+    doc.rect(0, y - 4, W, 8, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7);
+    doc.setTextColor(...gold);
+    doc.setCharSpace(2);
+    doc.text('OBSERVAÇÕES', 20, y + 1);
+    doc.setCharSpace(0);
+    y += 14;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...white);
+    const lines = doc.splitTextToSize(res.obs, W - 40);
+    doc.text(lines, col1, y);
+    y += lines.length * 5 + 6;
+  }
+
+  // Rodapé
+  y = 270;
+  doc.setDrawColor(...gold);
+  doc.setLineWidth(0.3);
+  doc.line(20, y, W - 20, y);
+  y += 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(...gray);
+  doc.text('Forthouse Casa de Praia  •  Ilha de Itamaracá, Pernambuco', W / 2, y, { align: 'center' });
+  doc.text('Documento gerado em ' + new Date().toLocaleString('pt-BR'), W / 2, y + 5, { align: 'center' });
+
+  // Barra dourada final
+  doc.setFillColor(...gold);
+  doc.rect(0, 295, W, 2, 'F');
+
+  doc.save(`Ticket_Forthouse_${res.nome.replace(/\s+/g,'_')}_${res.id}.pdf`);
+}
+
+// ── WhatsApp do hóspede ───────────────────────────────────────────────────────
+function abrirWppHospede(res) {
+  if (!res.wpp) { alert('Hóspede sem WhatsApp cadastrado.'); return; }
+  const num = res.wpp.replace(/\D/g, '');
+  const fmtD = s => { if(!s) return '—'; const p=s.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; };
+  const msg = encodeURIComponent(
+    `Olá, ${res.nome}! 🏖️\n\n` +
+    `Confirmando sua reserva na *Forthouse Casa de Praia*.\n\n` +
+    `📅 *Check-in:* ${fmtD(res.checkin)}\n` +
+    `📅 *Check-out:* ${fmtD(res.checkout)}\n` +
+    `💰 *Total:* R$ ${Number(res.valor||0).toLocaleString('pt-BR')}\n\n` +
+    `Qualquer dúvida, estamos à disposição!`
+  );
+  window.open(`https://wa.me/55${num}?text=${msg}`, '_blank');
+}
+
+// ── Promoções públicas ────────────────────────────────────────────────────────
 async function carregarPromoPublic(){
   try{
-    // Banner: promoção ativa
     const rb=await fetch(API+'/api/promocoes/ativa'); const db=await rb.json();
-    if(db.promocao) mostrarBanner(db.promocao); else document.getElementById('promoBanner').classList.remove('ativa');
-
-    // Quadro de avisos: todas
+    if(db.promocao) mostrarBanner(db.promocao);
+    else document.getElementById('promoBanner').classList.remove('ativa');
     const rp=await fetch(API+'/api/promocoes'); const dp=await rp.json();
     renderAvisos(dp.promocoes||[]);
   }catch(e){ document.getElementById('avisosGrid').innerHTML='<div class="empty-msg">Nenhuma promoção disponível no momento.</div>'; }
@@ -486,11 +714,11 @@ function fecharBanner(){ document.getElementById('promoBanner').classList.remove
 function renderAvisos(promos){
   const el=document.getElementById('avisosGrid');
   if(!promos.length){ el.innerHTML='<div class="empty-msg" style="grid-column:1/-1">Nenhuma promoção cadastrada ainda.</div>'; return; }
-  const statusLabel={ ativa:'🟡 Ativa agora', em_breve:'🔵 Em breve', encerrada:'⚫ Encerrada' };
+  const sLabel={ativa:'🟡 Ativa agora',em_breve:'🔵 Em breve',encerrada:'⚫ Encerrada'};
   el.innerHTML=promos.map(p=>`
     <div class="aviso-card ${p.status}">
       ${p.status==='encerrada'?'<div class="aviso-encerrado-tag">Encerrada</div>':''}
-      <div class="aviso-status">${statusLabel[p.status]||p.status}</div>
+      <div class="aviso-status">${sLabel[p.status]||p.status}</div>
       <div class="aviso-titulo">${p.titulo}</div>
       ${p.periodo?`<div class="aviso-periodo">📆 ${p.periodo}</div>`:''}
       <div class="aviso-preco">${p.preco}</div>
@@ -500,12 +728,12 @@ function renderAvisos(promos){
     </div>`).join('');
 }
 
-// ── ADMIN ─────────────────────────────────────────────────────────────────────
+// ── Admin ─────────────────────────────────────────────────────────────────────
 function abrirAdmin(){ document.getElementById('adminOverlay').classList.add('open'); }
 function fecharAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
 
 async function loginAdm(){
-  const user=document.getElementById('admUser').value.trim(), pass=document.getElementById('admPass').value;
+  const user=document.getElementById('admUser').value.trim(),pass=document.getElementById('admPass').value;
   const err=document.getElementById('loginErr'); err.classList.remove('show');
   try{
     const r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user,pass})});
@@ -528,7 +756,32 @@ async function carregarReservas(){
   try{
     const r=await fetch(API+'/api/admin/reservas',{headers:admHeaders}); const d=await r.json();
     if(!d.reservas||!d.reservas.length){el.innerHTML='<div class="empty-msg">Nenhuma reserva cadastrada ainda.</div>';return;}
-    el.innerHTML=d.reservas.map(res=>`<div class="res-item"><div class="res-info"><div class="res-name">${res.nome}</div><div class="res-meta">${fmtDate(res.checkin)} → ${fmtDate(res.checkout)}${res.valor?` · R$ ${Number(res.valor).toLocaleString('pt-BR')}`:''}${res.wpp?` · 📱 ${res.wpp}`:''}${res.obs?`<br><em style="color:rgba(255,255,255,0.3)">${res.obs}</em>`:''}</div></div><span class="badge ${res.tipo==='manual'?'badge-manual':'badge-online'}">${res.tipo==='manual'?'Manual':'Online'}</span><button class="del-btn" onclick="delReserva(${res.id})">×</button></div>`).join('');
+    el.innerHTML=d.reservas.map(res=>`
+      <div class="res-item">
+        <div class="res-top">
+          <div class="res-info">
+            <div class="res-name">${res.nome}</div>
+            <div class="res-meta">
+              ${fmtDate(res.checkin)} → ${fmtDate(res.checkout)}
+              ${res.valor?` · <strong style="color:#e8a020">R$ ${Number(res.valor).toLocaleString('pt-BR')}</strong>`:''}
+              ${res.cpf?` · CPF: ${res.cpf}`:''}
+              ${res.wpp?` · 📱 ${res.wpp}`:''}
+              ${res.obs?`<br><em style="color:rgba(255,255,255,0.3);font-size:10px">${res.obs}</em>`:''}
+            </div>
+          </div>
+          <span class="badge ${res.tipo==='manual'?'badge-manual':'badge-online'}">${res.tipo==='manual'?'Manual':'Online'}</span>
+        </div>
+        <div class="res-actions">
+          <button class="res-action-btn btn-pdf" onclick='gerarTicketPDF(${JSON.stringify(res)})'>
+            📄 Gerar ticket PDF
+          </button>
+          <button class="res-action-btn btn-wpp" onclick='abrirWppHospede(${JSON.stringify(res)})'>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp do hóspede
+          </button>
+          <button class="res-action-btn btn-del" onclick="delReserva(${res.id})">🗑 Remover</button>
+        </div>
+      </div>`).join('');
   }catch(e){ el.innerHTML='<div class="empty-msg">Erro ao carregar reservas.</div>'; }
 }
 
@@ -554,58 +807,41 @@ async function carregarPromosAdm(){
   try{
     const r=await fetch(API+'/api/admin/promocoes',{headers:admHeaders}); const d=await r.json();
     if(!d.promocoes||!d.promocoes.length){el.innerHTML='<div class="empty-msg">Nenhuma promoção criada ainda.</div>';return;}
-    const sLabels={ativa:'🟡 Ativa',em_breve:'🔵 Em breve',encerrada:'⚫ Encerrada'};
     el.innerHTML=d.promocoes.map(p=>`
       <div class="promo-item">
         <div class="promo-header">
-          <div>
-            <div class="promo-name">${p.titulo}</div>
-            <div class="promo-meta">${p.preco} ${p.tipo_preco||''} ${p.periodo?'· 📆 '+p.periodo:''}</div>
-          </div>
+          <div><div class="promo-name">${p.titulo}</div>
+          <div class="promo-meta">${p.preco} ${p.tipo_preco||''} ${p.periodo?'· 📆 '+p.periodo:''}</div></div>
           <div class="promo-actions">
-            <button class="status-btn ${p.status==='ativa'?'ativa':''}" onclick="mudarStatus(${p.id},'ativa')" title="Marcar como ativa">🟡 Ativa</button>
-            <button class="status-btn ${p.status==='em_breve'?'em_breve':''}" onclick="mudarStatus(${p.id},'em_breve')" title="Marcar como em breve">🔵 Em breve</button>
-            <button class="status-btn ${p.status==='encerrada'?'encerrada':''}" onclick="mudarStatus(${p.id},'encerrada')" title="Marcar como encerrada">⚫ Encerrada</button>
-            <button class="del-btn" onclick="delPromo(${p.id})" title="Excluir">×</button>
+            <button class="status-btn ${p.status==='ativa'?'ativa':''}" onclick="mudarStatus(${p.id},'ativa')">🟡 Ativa</button>
+            <button class="status-btn ${p.status==='em_breve'?'em_breve':''}" onclick="mudarStatus(${p.id},'em_breve')">🔵 Em breve</button>
+            <button class="status-btn ${p.status==='encerrada'?'encerrada':''}" onclick="mudarStatus(${p.id},'encerrada')">⚫ Encerrada</button>
+            <button class="del-btn" onclick="delPromo(${p.id})">×</button>
           </div>
         </div>
-        ${p.descricao?`<div class="promo-meta" style="margin-top:2px;font-style:italic">${p.descricao}</div>`:''}
+        ${p.descricao?`<div class="promo-meta" style="font-style:italic">${p.descricao}</div>`:''}
       </div>`).join('');
   }catch(e){ el.innerHTML='<div class="empty-msg">Erro ao carregar.</div>'; }
 }
 
 async function salvarPromo(){
-  const titulo=document.getElementById('pTitulo').value.trim(), preco=document.getElementById('pPreco').value.trim();
+  const titulo=document.getElementById('pTitulo').value.trim(),preco=document.getElementById('pPreco').value.trim();
   if(!titulo||!preco){alert('Preencha título e valor.');return;}
   try{
-    const r=await fetch(API+'/api/admin/promocoes',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({
-      titulo, preco,
-      tipo_preco:document.getElementById('pTipo').value,
-      descricao:document.getElementById('pDesc').value.trim(),
-      periodo:document.getElementById('pPeriodo').value.trim(),
-      status:document.getElementById('pStatus').value
-    })});
-    if(r.ok){
-      ['pTitulo','pPreco','pDesc','pPeriodo'].forEach(id=>document.getElementById(id).value='');
-      await carregarPromosAdm();
-      await carregarPromoPublic();
-      const ok=document.getElementById('msgPromoOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000);
-    }
+    const r=await fetch(API+'/api/admin/promocoes',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({titulo,preco,tipo_preco:document.getElementById('pTipo').value,descricao:document.getElementById('pDesc').value.trim(),periodo:document.getElementById('pPeriodo').value.trim(),status:document.getElementById('pStatus').value})});
+    if(r.ok){ ['pTitulo','pPreco','pDesc','pPeriodo'].forEach(id=>document.getElementById(id).value=''); await carregarPromosAdm(); await carregarPromoPublic(); const ok=document.getElementById('msgPromoOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
   }catch(e){ alert('Erro ao salvar promoção.'); }
 }
 
-async function mudarStatus(id, status){
-  try{
-    await fetch(API+`/api/admin/promocoes/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({status})});
-    await carregarPromosAdm();
-    await carregarPromoPublic();
-  }catch(e){ alert('Erro ao atualizar status.'); }
+async function mudarStatus(id,status){
+  try{ await fetch(API+`/api/admin/promocoes/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({status})}); await carregarPromosAdm(); await carregarPromoPublic(); }
+  catch(e){ alert('Erro.'); }
 }
 
 async function delPromo(id){
   if(!confirm('Excluir esta promoção permanentemente?')) return;
   try{ await fetch(API+`/api/admin/promocoes/${id}`,{method:'DELETE',headers:admHeaders}); await carregarPromosAdm(); await carregarPromoPublic(); }
-  catch(e){ alert('Erro ao excluir.'); }
+  catch(e){ alert('Erro.'); }
 }
 
 initCal();
