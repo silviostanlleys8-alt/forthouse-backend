@@ -1,14 +1,11 @@
 {
   "name": "forthouse-backend",
   "version": "1.0.0",
-  "description": "Forthouse Casa de Praia - Sistema de Reservas",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "scripts": { "start": "node server.js" },
   "dependencies": {
     "express": "^4.18.2",
-    "@libsql/client": "^0.6.0",
+    "@libsql/client": "^0.14.0",
     "cors": "^2.8.5"
   }
 }
