@@ -505,8 +505,8 @@
           <div class="form-group"><label>CPF</label><input type="text" id="nCpf" placeholder="000.000.000-00"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>WhatsApp</label><input type="text" id="nWpp" placeholder="+55 87 99999-9999"></div>
           <div class="form-group"><label>Valor total (R$)</label><input type="number" id="nValor" placeholder="0" min="0"></div>
+          <div class="form-group"><label>Sinal pago (R$)</label><input type="number" id="nSinal" placeholder="0" min="0"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Check-in *</label><input type="date" id="nIn"></div>
@@ -573,10 +573,13 @@
       <div class="form-group"><label>Valor total (R$)</label><input type="number" id="eValor" placeholder="0" min="0"></div>
     </div>
     <div class="form-row">
+      <div class="form-group"><label>Sinal pago (R$)</label><input type="number" id="eSinal" placeholder="0" min="0"><span class="hint" id="eSinalHint"></span></div>
+      <div class="form-group"><label>Observações</label><textarea id="eObs" placeholder="Ex: pagamento antecipado..." style="min-height:42px"></textarea></div>
+    </div>
+    <div class="form-row">
       <div class="form-group"><label>Check-in *</label><input type="date" id="eIn"></div>
       <div class="form-group"><label>Check-out *</label><input type="date" id="eOut"></div>
     </div>
-    <div class="form-group" style="margin-bottom:0"><label>Observações</label><textarea id="eObs" placeholder="Ex: pagamento antecipado..."></textarea></div>
     <div class="msg-err" id="editErr" style="margin-top:12px"></div>
     <button class="update-btn" onclick="salvarEdicao()">💾 Salvar alterações</button>
   </div>
@@ -829,12 +832,17 @@ function gerarTicketPDF(res) {
   };
 
   finRow(`Diárias (${noites} noite${noites !== 1 ? 's' : ''})`, '—', false);
-  const valNum = Number(res.valor) || 0;
-  const entrada = Math.round(valNum * 0.2);
-  const restante = valNum - entrada;
+  const valNum   = Number(res.valor) || 0;
+  const sinalNum  = Number(res.sinal) || 0;
+  const pctSinal  = valNum > 0 ? ((sinalNum / valNum) * 100).toFixed(1) : 0;
+  const restante  = valNum - sinalNum;
+
   if (valNum > 0) {
     finRow('Total da reserva', `R$ ${valNum.toLocaleString('pt-BR')}`, false);
-    finRow('Entrada paga (20%)', `R$ ${entrada.toLocaleString('pt-BR')}`, false);
+    const sinalLabel = sinalNum > 0
+      ? `R$ ${sinalNum.toLocaleString('pt-BR')} (${pctSinal}%)`
+      : 'Não registrado';
+    finRow('Sinal pago', sinalLabel, false);
     y += 2;
     doc.setDrawColor(...gold);
     doc.setLineWidth(0.3);
@@ -843,6 +851,7 @@ function gerarTicketPDF(res) {
     finRow('Saldo na entrega das chaves', `R$ ${restante.toLocaleString('pt-BR')}`, true);
   } else {
     finRow('Valor total', 'A confirmar', false);
+    finRow('Sinal pago', sinalNum > 0 ? `R$ ${sinalNum.toLocaleString('pt-BR')}` : 'Não registrado', false);
   }
 
   // Observações
@@ -973,7 +982,7 @@ async function carregarReservas(){
             <div class="res-name">${res.nome}</div>
             <div class="res-meta">
               ${fmtDate(res.checkin)} → ${fmtDate(res.checkout)}
-              ${res.valor?` · <strong style="color:#e8a020">R$ ${Number(res.valor).toLocaleString('pt-BR')}</strong>`:''}
+              ${res.valor?` · <strong style="color:#e8a020">R$ ${Number(res.valor).toLocaleString('pt-BR')}</strong>`:''}${res.sinal?` · <span style="color:rgba(37,211,102,0.8)">Sinal: R$ ${Number(res.sinal).toLocaleString('pt-BR')} (${res.valor?((Number(res.sinal)/Number(res.valor))*100).toFixed(0)+'%':'—'})</span>`:' · <span style="color:rgba(255,200,0,0.5)">Sem sinal registrado</span>'}
               ${res.cpf?` · CPF: ${res.cpf}`:''}
               ${res.wpp?` · 📱 ${res.wpp}`:''}
               ${res.obs?`<br><em style="color:rgba(255,255,255,0.3);font-size:10px">${res.obs}</em>`:''}
@@ -1003,8 +1012,8 @@ async function salvarReserva(){
   const errEl=document.getElementById('msgResErr'); errEl.classList.remove('show');
   if(!nome||!checkin||!checkout){errEl.textContent='Preencha nome, check-in e check-out.';errEl.classList.add('show');return;}
   try{
-    const r=await fetch(API+'/api/admin/reservas',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({nome,cpf:document.getElementById('nCpf').value,wpp:document.getElementById('nWpp').value,checkin,checkout,valor:document.getElementById('nValor').value||0,obs:document.getElementById('nObs').value})});
-    if(r.ok){ ['nNome','nCpf','nWpp','nValor','nIn','nOut','nObs'].forEach(id=>document.getElementById(id).value=''); await carregarDatas(); render(); switchTab('reservas'); const ok=document.getElementById('msgResOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
+    const r=await fetch(API+'/api/admin/reservas',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({nome,cpf:document.getElementById('nCpf').value,wpp:document.getElementById('nWpp').value,checkin,checkout,valor:document.getElementById('nValor').value||0,sinal:document.getElementById('nSinal').value||0,obs:document.getElementById('nObs').value})});
+    if(r.ok){ ['nNome','nCpf','nWpp','nValor','nSinal','nIn','nOut','nObs'].forEach(id=>document.getElementById(id).value=''); await carregarDatas(); render(); switchTab('reservas'); const ok=document.getElementById('msgResOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
     else{ const d=await r.json(); errEl.textContent=d.error||'Erro ao salvar.'; errEl.classList.add('show'); }
   }catch(e){ errEl.textContent='Erro de conexão.'; errEl.classList.add('show'); }
 }
@@ -1057,6 +1066,22 @@ async function delPromo(id){
   catch(e){ alert('Erro.'); }
 }
 
+// ── HINT SINAL ───────────────────────────────────────────────────────────────────
+function atualizarHintSinal(inputId, hintId, valor, sinal) {
+  const hint = document.getElementById(hintId);
+  if (!hint) return;
+  const v = Number(valor) || 0;
+  const s = Number(sinal) || 0;
+  if (v > 0 && s > 0) {
+    const pct = ((s / v) * 100).toFixed(1);
+    const resto = v - s;
+    hint.textContent = `${pct}% do total · Saldo: R$ ${resto.toLocaleString('pt-BR')}`;
+    hint.style.color = s <= v ? 'rgba(37,211,102,0.8)' : 'rgba(255,100,100,0.8)';
+  } else {
+    hint.textContent = '';
+  }
+}
+
 // ── EDIÇÃO DE RESERVA ─────────────────────────────────────────────────────────
 function abrirEdicao(res) {
   document.getElementById('editId').value    = res.id;
@@ -1064,6 +1089,8 @@ function abrirEdicao(res) {
   document.getElementById('eCpf').value      = res.cpf  || '';
   document.getElementById('eWpp').value      = res.wpp  || '';
   document.getElementById('eValor').value    = res.valor || '';
+  document.getElementById('eSinal').value    = res.sinal || '';
+  atualizarHintSinal('eSinal','eSinalHint', res.valor||0, res.sinal||0);
   document.getElementById('eIn').value       = res.checkin  || '';
   document.getElementById('eOut').value      = res.checkout || '';
   document.getElementById('eObs').value      = res.obs  || '';
@@ -1102,6 +1129,7 @@ async function salvarEdicao() {
         wpp:      document.getElementById('eWpp').value,
         checkin,  checkout,
         valor:    document.getElementById('eValor').value || 0,
+        sinal:    document.getElementById('eSinal').value || 0,
         obs:      document.getElementById('eObs').value
       })
     });
