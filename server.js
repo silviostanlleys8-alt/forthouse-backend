@@ -31,9 +31,14 @@ async function initDB() {
     titulo TEXT NOT NULL,
     descricao TEXT,
     preco TEXT,
+    tipo_preco TEXT DEFAULT 'por noite',
+    periodo TEXT,
     ativa INTEGER DEFAULT 1,
     criado_em TEXT DEFAULT (datetime('now'))
   )`);
+  // Migração: adiciona colunas novas se não existirem
+  try { await db.execute(`ALTER TABLE campanhas ADD COLUMN tipo_preco TEXT DEFAULT 'por noite'`); } catch(e) {}
+  try { await db.execute(`ALTER TABLE campanhas ADD COLUMN periodo TEXT`); } catch(e) {}
   console.log('Banco iniciado com sucesso!');
 }
 
@@ -77,7 +82,6 @@ app.get('/api/campanhas/ativas', async (req, res) => {
     const result = await db.execute('SELECT * FROM campanhas WHERE ativa = 1 ORDER BY id DESC LIMIT 1');
     res.json({ campanha: result.rows[0] || null });
   } catch (e) {
-    console.error('campanhas/ativas:', e.message);
     res.status(500).json({ error: e.message });
   }
 });
@@ -97,7 +101,7 @@ app.post('/api/admin/reservas', authAdmin, async (req, res) => {
   try {
     await db.execute({
       sql: 'INSERT INTO reservas (nome, cpf, wpp, checkin, checkout, valor, tipo, obs) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      args: [nome, cpf || '', wpp || '', checkin, checkout, valor || 0, 'manual', obs || '']
+      args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, 'manual', obs||'']
     });
     res.json({ ok: true });
   } catch (e) {
@@ -124,12 +128,12 @@ app.get('/api/admin/campanhas', authAdmin, async (req, res) => {
 });
 
 app.post('/api/admin/campanhas', authAdmin, async (req, res) => {
-  const { titulo, descricao, preco } = req.body;
+  const { titulo, descricao, preco, tipo_preco, periodo } = req.body;
   if (!titulo || !preco) return res.status(400).json({ error: 'Título e preço obrigatórios' });
   try {
     await db.execute({
-      sql: 'INSERT INTO campanhas (titulo, descricao, preco, ativa) VALUES (?, ?, ?, 1)',
-      args: [titulo, descricao || '', preco]
+      sql: 'INSERT INTO campanhas (titulo, descricao, preco, tipo_preco, periodo, ativa) VALUES (?, ?, ?, ?, ?, 1)',
+      args: [titulo, descricao||'', preco, tipo_preco||'por noite', periodo||'']
     });
     res.json({ ok: true });
   } catch (e) {
