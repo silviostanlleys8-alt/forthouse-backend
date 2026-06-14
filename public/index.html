@@ -602,10 +602,10 @@
       <div id="tabPrecos" style="display:none">
         <div class="preco-info-box">
           <strong>Como funciona o cálculo de preços:</strong><br>
-          • <strong>Diária normal:</strong> R$ 250 (seg a qui)<br>
-          • <strong>Final de semana:</strong> R$ 750 (sex, sáb, dom) — fixo no sistema<br>
-          • <strong>Datas comemorativas:</strong> valor especial que você cadastra abaixo<br>
-          ℹ️ Se uma data tiver período especial cadastrado, ele prevalece sobre os demais.
+          • <strong>Seg a Qui:</strong> R$ 200 / diária<br>
+          • <strong>Pacote fim de semana</strong> (sex, sáb, dom): <strong>R$ 750 fixo</strong> — independente de quantos dias<br>
+          • <strong>Datas comemorativas:</strong> valor especial por diária que você cadastra abaixo<br>
+          ℹ️ Datas comemorativas prevalecem sobre pacote FDS e diária normal.
         </div>
         <div class="msg-ok" id="msgPrecoOk">✓ Período salvo com sucesso!</div>
         <div id="periodosList"><div class="loading">Carregando...</div></div>
@@ -779,8 +779,8 @@ function updateInfo(){
 
   // Montar breakdown detalhado
   const tipoIcon = {fds:'📅', comemorativa:'🎉', diaria:'📆'};
-  const breakdownHtml = breakdown.length > 1 ? `<div class="cal-price-breakdown">` +
-    breakdown.map(b => `${tipoIcon[b.tipo]||'📆'} ${b.nome}: ${b.qtd}x <span class="dest">R$ ${b.valor.toLocaleString('pt-BR')}</span> = R$ ${(b.qtd*b.valor).toLocaleString('pt-BR')}`).join('<br>') +
+  const breakdownHtml = breakdown.length >= 1 ? `<div class="cal-price-breakdown">` +
+    breakdown.map(b => `${tipoIcon[b.tipo]||'📆'} ${b.nome}: <span class="dest">${b.valorExibido||'R$ '+b.valor.toLocaleString('pt-BR')}</span>`).join('<br>') +
     `</div>` : '';
 
   txt.innerHTML=`<strong style="color:#fff">Check-in:</strong> ${fmt(s1)} &nbsp;→&nbsp; <strong style="color:#fff">Check-out:</strong> ${fmt(s2)}<br>${n} diária${n>1?'s':''} &nbsp;·&nbsp; Total: <strong style="color:#e8a020">R$ ${total.toLocaleString('pt-BR')}</strong><br>Entrada (20%): <strong>R$ ${ent.toLocaleString('pt-BR')}</strong>${breakdownHtml}`;
@@ -1062,8 +1062,8 @@ function abrirWppHospede(res) {
 
 
 // ── SISTEMA DE PREÇOS DINÂMICO ────────────────────────────────────────────────
-const PRECO_DIARIA_NORMAL = 250;
-const PRECO_FDS = 750; // sexta, sábado, domingo
+const PRECO_DIARIA_NORMAL = 200;  // seg a qui
+const PRECO_PACOTE_FDS = 750;     // pacote sex+sab+dom = R$750 fixo
 let periodosEspeciais = [];
 
 async function carregarPeriodosPublic() {
@@ -1074,20 +1074,19 @@ async function carregarPeriodosPublic() {
   } catch(e) { periodosEspeciais = []; }
 }
 
-function getPrecoData(dateStr) {
-  // Verifica se há período especial cadastrado para essa data
-  const especial = periodosEspeciais.find(p =>
-    dateStr >= p.data_inicio && dateStr <= p.data_fim
-  );
-  if (especial) return { valor: Number(especial.valor), nome: especial.nome, tipo: especial.tipo };
+function isFds(dow) { return dow === 5 || dow === 6 || dow === 0; } // sex=5, sab=6, dom=0
 
-  // Final de semana (5=sex, 6=sab, 0=dom)
-  const dow = new Date(dateStr + 'T12:00:00').getDay();
-  if (dow === 5 || dow === 6 || dow === 0) {
-    return { valor: PRECO_FDS, nome: 'Final de semana', tipo: 'fds' };
+function temEspecialNoPeriodo(s1, s2) {
+  // Verifica se qualquer dia do período tem data especial
+  let d = new Date(s1[0], s1[1], s1[2]);
+  const fim = new Date(s2[0], s2[1], s2[2]);
+  while (d < fim) {
+    const ds = d.toISOString().split('T')[0];
+    const esp = periodosEspeciais.find(p => ds >= p.data_inicio && ds <= p.data_fim);
+    if (esp) return true;
+    d.setDate(d.getDate() + 1);
   }
-
-  return { valor: PRECO_DIARIA_NORMAL, nome: 'Diária normal', tipo: 'diaria' };
+  return false;
 }
 
 function calcularTotal(s1, s2) {
@@ -1096,23 +1095,75 @@ function calcularTotal(s1, s2) {
   let total = 0;
   let d = new Date(s1[0], s1[1], s1[2]);
   const fim = new Date(s2[0], s2[1], s2[2]);
-  let grupoAtual = null;
 
+  // Agrupar dias por semana para detectar pacotes FDS
+  const dias = [];
   while (d < fim) {
     const ds = d.toISOString().split('T')[0];
-    const preco = getPrecoData(ds);
-
-    // Agrupar datas consecutivas do mesmo tipo/valor
-    if (grupoAtual && grupoAtual.nome === preco.nome && grupoAtual.valor === preco.valor) {
-      grupoAtual.qtd++;
-    } else {
-      if (grupoAtual) breakdown.push(grupoAtual);
-      grupoAtual = { nome: preco.nome, tipo: preco.tipo, valor: preco.valor, qtd: 1 };
-    }
-    total += preco.valor;
+    const dow = d.getDay();
+    const especial = periodosEspeciais.find(p => ds >= p.data_inicio && ds <= p.data_fim);
+    dias.push({ ds, dow, especial });
     d.setDate(d.getDate() + 1);
   }
-  if (grupoAtual) breakdown.push(grupoAtual);
+
+  // Identificar pacotes FDS (sex+sab, sab+dom, sex+sab+dom, ou fds isolados)
+  // Lógica: agrupar dias de fds consecutivos SEM especial como um pacote
+  const processados = new Set();
+
+  for (let i = 0; i < dias.length; i++) {
+    if (processados.has(i)) continue;
+    const dia = dias[i];
+
+    // Data comemorativa — prevalece sobre tudo
+    if (dia.especial) {
+      breakdown.push({ nome: dia.especial.nome, tipo: 'comemorativa', valor: Number(dia.especial.valor), qtd: 1 });
+      total += Number(dia.especial.valor);
+      processados.add(i);
+      continue;
+    }
+
+    // É dia de fim de semana?
+    if (isFds(dia.dow)) {
+      // Coletar dias FDS consecutivos sem especial
+      const grupoFds = [i];
+      for (let j = i + 1; j < dias.length; j++) {
+        if (isFds(dias[j].dow) && !dias[j].especial) {
+          grupoFds.push(j);
+        } else break;
+      }
+      grupoFds.forEach(idx => processados.add(idx));
+
+      // Cobrar pacote FDS = R$750 fixo por grupo de até 3 dias (sex/sab/dom)
+      // Se tiver mais de 3 dias FDS consecutivos, divide em pacotes de 3
+      const totalFdsDias = grupoFds.length;
+      const pacotes = Math.ceil(totalFdsDias / 3);
+      for (let p = 0; p < pacotes; p++) {
+        const diasNoPacote = Math.min(3, totalFdsDias - p * 3);
+        breakdown.push({ nome: `Pacote fim de semana (${diasNoPacote} dia${diasNoPacote>1?'s':''})`, tipo: 'fds', valor: PRECO_PACOTE_FDS, qtd: 1 });
+        total += PRECO_PACOTE_FDS;
+      }
+      continue;
+    }
+
+    // Dia normal (seg a qui)
+    const last = breakdown[breakdown.length - 1];
+    if (last && last.tipo === 'diaria') {
+      last.qtd++;
+      last.valor += PRECO_DIARIA_NORMAL;
+    } else {
+      breakdown.push({ nome: 'Diária (seg–qui)', tipo: 'diaria', valor: PRECO_DIARIA_NORMAL, qtd: 1 });
+    }
+    total += PRECO_DIARIA_NORMAL;
+    processados.add(i);
+  }
+
+  // Recalcular valor exibido no breakdown para diárias
+  breakdown.forEach(b => {
+    if (b.tipo === 'diaria') b.valorExibido = `${b.qtd}× R$ ${PRECO_DIARIA_NORMAL.toLocaleString('pt-BR')} = R$ ${b.valor.toLocaleString('pt-BR')}`;
+    else if (b.tipo === 'fds') b.valorExibido = `R$ ${PRECO_PACOTE_FDS.toLocaleString('pt-BR')} (pacote fixo)`;
+    else b.valorExibido = `R$ ${b.valor.toLocaleString('pt-BR')} / diária`;
+  });
+
   return { total, breakdown };
 }
 
