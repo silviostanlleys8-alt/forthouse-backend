@@ -783,7 +783,7 @@ function updateInfo(){
     breakdown.map(b => `${tipoIcon[b.tipo]||'📆'} ${b.nome}: ${b.qtd}x <span class="dest">R$ ${b.valor.toLocaleString('pt-BR')}</span> = R$ ${(b.qtd*b.valor).toLocaleString('pt-BR')}`).join('<br>') +
     `</div>` : '';
 
-  txt.innerHTML=`<strong style="color:#fff">Check-in:</strong> ${fmt(s1)} &nbsp;→&nbsp; <strong style="color:#fff">Check-out:</strong> ${fmt(s2)}<br>${n} noite${n>1?'s':''} &nbsp;·&nbsp; Total estimado: <strong style="color:#e8a020">R$ ${total.toLocaleString('pt-BR')}</strong><br>Entrada (20%): <strong>R$ ${ent.toLocaleString('pt-BR')}</strong>${breakdownHtml}`;
+  txt.innerHTML=`<strong style="color:#fff">Check-in:</strong> ${fmt(s1)} &nbsp;→&nbsp; <strong style="color:#fff">Check-out:</strong> ${fmt(s2)}<br>${n} diária${n>1?'s':''} &nbsp;·&nbsp; Total: <strong style="color:#e8a020">R$ ${total.toLocaleString('pt-BR')}</strong><br>Entrada (20%): <strong>R$ ${ent.toLocaleString('pt-BR')}</strong>${breakdownHtml}`;
   res.classList.add('show');
 }
 
@@ -981,7 +981,7 @@ function gerarTicketPDF(res) {
     y += destaque ? 10 : 8;
   };
 
-  finRow(`Diárias (${noites} noite${noites !== 1 ? 's' : ''})`, '—', false);
+  finRow(`Diárias: ${noites} diária${noites !== 1 ? 's' : ''}`, '—', false);
   const valNum   = Number(res.valor) || 0;
   const sinalNum  = Number(res.sinal) || 0;
   const pctSinal  = valNum > 0 ? ((sinalNum / valNum) * 100).toFixed(1) : 0;
@@ -1188,7 +1188,7 @@ function abrirFichaReserva() {
   document.getElementById('fichaCheckin').textContent  = fmt(s1);
   document.getElementById('fichaCheckout').textContent = fmt(s2);
   document.getElementById('fichaNoites').innerHTML =
-    `<strong>${n}</strong> noite${n > 1 ? 's' : ''} &nbsp;·&nbsp; Total: <strong style="color:#e8a020">R$ ${fichaTotal.toLocaleString('pt-BR')}</strong> &nbsp;·&nbsp; Entrada: R$ ${fichaEnt.toLocaleString('pt-BR')}`;
+    `<strong>${n}</strong> diária${n > 1 ? 's' : ''} &nbsp;·&nbsp; Total: <strong style="color:#e8a020">R$ ${fichaTotal.toLocaleString('pt-BR')}</strong> &nbsp;·&nbsp; Entrada: R$ ${fichaEnt.toLocaleString('pt-BR')}`;
   // Limpar campos
   ['fichaName','fichaCpf','fichaWpp','fichaMsgExtra'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('fichaErr').classList.remove('show');
