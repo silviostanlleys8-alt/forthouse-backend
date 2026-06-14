@@ -98,6 +98,18 @@ app.post('/api/admin/reservas', authAdmin, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+app.put('/api/admin/reservas/:id', authAdmin, async (req, res) => {
+  const { nome, cpf, wpp, checkin, checkout, valor, obs } = req.body;
+  if (!nome || !checkin || !checkout) return res.status(400).json({ error: 'Nome, check-in e check-out são obrigatórios' });
+  try {
+    await db.execute({
+      sql: 'UPDATE reservas SET nome=?,cpf=?,wpp=?,checkin=?,checkout=?,valor=?,obs=? WHERE id=?',
+      args: [nome, cpf||'', wpp||'', checkin, checkout, valor||0, obs||'', req.params.id]
+    });
+    res.json({ ok: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 app.delete('/api/admin/reservas/:id', authAdmin, async (req, res) => {
   try { await db.execute({ sql: 'DELETE FROM reservas WHERE id = ?', args: [req.params.id] }); res.json({ ok: true }); }
   catch (e) { res.status(500).json({ error: e.message }); }
