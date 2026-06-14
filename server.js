@@ -8,61 +8,51 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ── Banco de dados Turso ──────────────────────────────────────────────────────
 const db = createClient({
   url: process.env.TURSO_URL,
   authToken: process.env.TURSO_TOKEN,
 });
 
 async function initDB() {
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS reservas (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nome TEXT NOT NULL,
-      cpf TEXT,
-      wpp TEXT,
-      checkin TEXT NOT NULL,
-      checkout TEXT NOT NULL,
-      valor REAL DEFAULT 0,
-      tipo TEXT DEFAULT 'manual',
-      obs TEXT,
-      criado_em TEXT DEFAULT (datetime('now'))
-    )
-  `);
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS campanhas (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      titulo TEXT NOT NULL,
-      descricao TEXT,
-      preco TEXT,
-      ativa INTEGER DEFAULT 1,
-      criado_em TEXT DEFAULT (datetime('now'))
-    )
-  `);
+  await db.execute(`CREATE TABLE IF NOT EXISTS reservas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    cpf TEXT,
+    wpp TEXT,
+    checkin TEXT NOT NULL,
+    checkout TEXT NOT NULL,
+    valor REAL DEFAULT 0,
+    tipo TEXT DEFAULT 'manual',
+    obs TEXT,
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`);
+  await db.execute(`CREATE TABLE IF NOT EXISTS campanhas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo TEXT NOT NULL,
+    descricao TEXT,
+    preco TEXT,
+    ativa INTEGER DEFAULT 1,
+    criado_em TEXT DEFAULT (datetime('now'))
+  )`);
+  console.log('Banco iniciado com sucesso!');
 }
 
-// ── Auth middleware ───────────────────────────────────────────────────────────
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || '86951519SJJ';
 
 function authAdmin(req, res, next) {
-  const { user, pass } = req.headers;
+  const user = req.headers['user'];
+  const pass = req.headers['pass'];
   if (user === ADMIN_USER && pass === ADMIN_PASS) return next();
   return res.status(401).json({ error: 'Não autorizado' });
 }
 
-// ── Rotas públicas ────────────────────────────────────────────────────────────
-
-// Login admin
 app.post('/api/login', (req, res) => {
   const { user, pass } = req.body;
-  if (user === ADMIN_USER && pass === ADMIN_PASS) {
-    return res.json({ ok: true });
-  }
+  if (user === ADMIN_USER && pass === ADMIN_PASS) return res.json({ ok: true });
   return res.status(401).json({ error: 'Usuário ou senha incorretos' });
 });
 
-// Listar datas ocupadas (público - só datas, sem dados pessoais)
 app.get('/api/datas-ocupadas', async (req, res) => {
   try {
     const result = await db.execute('SELECT checkin, checkout FROM reservas');
@@ -77,23 +67,21 @@ app.get('/api/datas-ocupadas', async (req, res) => {
     });
     res.json({ datas });
   } catch (e) {
+    console.error('datas-ocupadas:', e.message);
     res.status(500).json({ error: e.message });
   }
 });
 
-// Campanhas ativas (público)
 app.get('/api/campanhas/ativas', async (req, res) => {
   try {
     const result = await db.execute('SELECT * FROM campanhas WHERE ativa = 1 ORDER BY id DESC LIMIT 1');
     res.json({ campanha: result.rows[0] || null });
   } catch (e) {
+    console.error('campanhas/ativas:', e.message);
     res.status(500).json({ error: e.message });
   }
 });
 
-// ── Rotas admin ───────────────────────────────────────────────────────────────
-
-// Listar reservas
 app.get('/api/admin/reservas', authAdmin, async (req, res) => {
   try {
     const result = await db.execute('SELECT * FROM reservas ORDER BY checkin ASC');
@@ -103,12 +91,9 @@ app.get('/api/admin/reservas', authAdmin, async (req, res) => {
   }
 });
 
-// Criar reserva manual
 app.post('/api/admin/reservas', authAdmin, async (req, res) => {
   const { nome, cpf, wpp, checkin, checkout, valor, obs } = req.body;
-  if (!nome || !checkin || !checkout) {
-    return res.status(400).json({ error: 'Nome, check-in e check-out são obrigatórios' });
-  }
+  if (!nome || !checkin || !checkout) return res.status(400).json({ error: 'Nome, check-in e check-out são obrigatórios' });
   try {
     await db.execute({
       sql: 'INSERT INTO reservas (nome, cpf, wpp, checkin, checkout, valor, tipo, obs) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
@@ -120,7 +105,6 @@ app.post('/api/admin/reservas', authAdmin, async (req, res) => {
   }
 });
 
-// Deletar reserva
 app.delete('/api/admin/reservas/:id', authAdmin, async (req, res) => {
   try {
     await db.execute({ sql: 'DELETE FROM reservas WHERE id = ?', args: [req.params.id] });
@@ -130,7 +114,6 @@ app.delete('/api/admin/reservas/:id', authAdmin, async (req, res) => {
   }
 });
 
-// Listar campanhas (admin)
 app.get('/api/admin/campanhas', authAdmin, async (req, res) => {
   try {
     const result = await db.execute('SELECT * FROM campanhas ORDER BY id DESC');
@@ -140,7 +123,6 @@ app.get('/api/admin/campanhas', authAdmin, async (req, res) => {
   }
 });
 
-// Criar campanha
 app.post('/api/admin/campanhas', authAdmin, async (req, res) => {
   const { titulo, descricao, preco } = req.body;
   if (!titulo || !preco) return res.status(400).json({ error: 'Título e preço obrigatórios' });
@@ -155,7 +137,6 @@ app.post('/api/admin/campanhas', authAdmin, async (req, res) => {
   }
 });
 
-// Ativar / desativar campanha
 app.patch('/api/admin/campanhas/:id', authAdmin, async (req, res) => {
   const { ativa } = req.body;
   try {
@@ -166,7 +147,6 @@ app.patch('/api/admin/campanhas/:id', authAdmin, async (req, res) => {
   }
 });
 
-// Deletar campanha
 app.delete('/api/admin/campanhas/:id', authAdmin, async (req, res) => {
   try {
     await db.execute({ sql: 'DELETE FROM campanhas WHERE id = ?', args: [req.params.id] });
@@ -176,16 +156,11 @@ app.delete('/api/admin/campanhas/:id', authAdmin, async (req, res) => {
   }
 });
 
-// ── Fallback SPA ──────────────────────────────────────────────────────────────
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// ── Start ─────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
-initDB().then(() => {
-  app.listen(PORT, () => console.log(`Forthouse rodando na porta ${PORT}`));
-}).catch(err => {
-  console.error('Erro ao iniciar banco:', err);
-  process.exit(1);
-});
+initDB()
+  .then(() => app.listen(PORT, () => console.log(`Forthouse rodando na porta ${PORT}`)))
+  .catch(err => { console.error('Erro ao iniciar banco:', err); process.exit(1); });
