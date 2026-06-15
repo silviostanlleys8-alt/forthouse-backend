@@ -1106,46 +1106,42 @@ function calcularTotal(s1, s2) {
     d.setDate(d.getDate() + 1);
   }
 
-  // Identificar pacotes FDS (sex+sab, sab+dom, sex+sab+dom, ou fds isolados)
-  // Lógica: agrupar dias de fds consecutivos SEM especial como um pacote
-  const processados = new Set();
-
-  for (let i = 0; i < dias.length; i++) {
-    if (processados.has(i)) continue;
+  // Processar cada dia individualmente
+  // FDS consecutivos (sex/sab/dom) sem especial = 1 pacote R$750
+  let i = 0;
+  while (i < dias.length) {
     const dia = dias[i];
 
     // Data comemorativa — prevalece sobre tudo
     if (dia.especial) {
       breakdown.push({ nome: dia.especial.nome, tipo: 'comemorativa', valor: Number(dia.especial.valor), qtd: 1 });
       total += Number(dia.especial.valor);
-      processados.add(i);
+      i++;
       continue;
     }
 
-    // É dia de fim de semana?
+    // É dia de fim de semana sem especial?
     if (isFds(dia.dow)) {
-      // Coletar dias FDS consecutivos sem especial
+      // Coletar dias FDS consecutivos sem especial (máx 3: sex, sab, dom)
       const grupoFds = [i];
-      for (let j = i + 1; j < dias.length; j++) {
-        if (isFds(dias[j].dow) && !dias[j].especial) {
-          grupoFds.push(j);
-        } else break;
+      let j = i + 1;
+      while (j < dias.length && isFds(dias[j].dow) && !dias[j].especial && grupoFds.length < 3) {
+        grupoFds.push(j);
+        j++;
       }
-      grupoFds.forEach(idx => processados.add(idx));
-
-      // Cobrar pacote FDS = R$750 fixo por grupo de até 3 dias (sex/sab/dom)
-      // Se tiver mais de 3 dias FDS consecutivos, divide em pacotes de 3
-      const totalFdsDias = grupoFds.length;
-      const pacotes = Math.ceil(totalFdsDias / 3);
-      for (let p = 0; p < pacotes; p++) {
-        const diasNoPacote = Math.min(3, totalFdsDias - p * 3);
-        breakdown.push({ nome: `Pacote fim de semana (${diasNoPacote} dia${diasNoPacote>1?'s':''})`, tipo: 'fds', valor: PRECO_PACOTE_FDS, qtd: 1 });
-        total += PRECO_PACOTE_FDS;
-      }
+      const diasNoPacote = grupoFds.length;
+      const nomePacote = diasNoPacote === 3
+        ? 'Pacote fim de semana (sex + sáb + dom)'
+        : diasNoPacote === 2
+          ? `Pacote fim de semana (${diasNoPacote} dias)`
+          : 'Diária fim de semana';
+      breakdown.push({ nome: nomePacote, tipo: 'fds', valor: PRECO_PACOTE_FDS, qtd: 1 });
+      total += PRECO_PACOTE_FDS;
+      i = grupoFds[grupoFds.length - 1] + 1; // avançar para depois do último dia FDS do grupo
       continue;
     }
 
-    // Dia normal (seg a qui)
+    // Dia normal (seg a qui) — R$200 cada
     const last = breakdown[breakdown.length - 1];
     if (last && last.tipo === 'diaria') {
       last.qtd++;
@@ -1154,7 +1150,7 @@ function calcularTotal(s1, s2) {
       breakdown.push({ nome: 'Diária (seg–qui)', tipo: 'diaria', valor: PRECO_DIARIA_NORMAL, qtd: 1 });
     }
     total += PRECO_DIARIA_NORMAL;
-    processados.add(i);
+    i++;
   }
 
   // Recalcular valor exibido no breakdown para diárias
