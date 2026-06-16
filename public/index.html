@@ -1571,6 +1571,29 @@ async function salvarEdicao() {
 initCal();
 carregarPeriodosPublic().then(() => render());
 carregarPromoPublic();
+
+// ── MANTER POSIÇÃO DO SCROLL AO RECARREGAR ────────────────────────────────────
+(function() {
+  // Restaurar posição salva
+  const savedY = sessionStorage.getItem('fh_scroll');
+  if (savedY) {
+    window.addEventListener('load', function() {
+      setTimeout(() => window.scrollTo({ top: parseInt(savedY), behavior: 'instant' }), 100);
+    });
+  }
+  // Salvar posição ao sair/recarregar
+  window.addEventListener('beforeunload', function() {
+    sessionStorage.setItem('fh_scroll', window.scrollY);
+  });
+  // Salvar posição a cada scroll (debounced)
+  let scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      sessionStorage.setItem('fh_scroll', window.scrollY);
+    }, 150);
+  });
+})();
 </script>
 </body>
 </html>
