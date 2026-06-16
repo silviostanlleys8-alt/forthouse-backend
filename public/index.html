@@ -1309,17 +1309,17 @@ function abrirAdmCal(fieldId, displayId, popId) {
   admCalState[popId] = { fieldId, displayId, popId, year, month };
   renderAdmCal(popId);
   pop.classList.add('open');
-
-  // Fechar ao clicar fora
-  setTimeout(() => {
-    document.addEventListener('click', function handler(e) {
-      if (!pop.contains(e.target) && e.target.id !== displayId && !e.target.closest('#'+displayId)) {
-        pop.classList.remove('open');
-        document.removeEventListener('click', handler);
-      }
-    });
-  }, 10);
 }
+
+// Fechar popup ao clicar fora (não interfere com botões internos)
+document.addEventListener('click', function(e) {
+  document.querySelectorAll('.adm-cal-popup.open').forEach(pop => {
+    const wrap = pop.closest('.adm-cal-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      pop.classList.remove('open');
+    }
+  });
+});
 
 function renderAdmCal(popId) {
   const st = admCalState[popId];
@@ -1331,9 +1331,9 @@ function renderAdmCal(popId) {
   const valAtual = document.getElementById(fieldId).value;
 
   let html = `<div class="adm-cal-nav">
-    <button onclick="admCalNav('${popId}',-1)">‹</button>
+    <button onclick="event.stopPropagation();admCalNav('${popId}',-1)">‹</button>
     <span>${mesesAdm[month]} ${year}</span>
-    <button onclick="admCalNav('${popId}',1)">›</button>
+    <button onclick="event.stopPropagation();admCalNav('${popId}',1)">›</button>
   </div>
   <div class="adm-cal-days">
     <div class="adm-cal-dname">D</div><div class="adm-cal-dname">S</div><div class="adm-cal-dname">T</div>
