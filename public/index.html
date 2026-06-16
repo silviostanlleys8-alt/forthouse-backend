@@ -228,6 +228,28 @@
 
 
 
+
+    /* CALENDÁRIO ADMIN */
+    .adm-cal-wrap{position:relative}
+    .adm-cal-input{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 12px;color:#fff;font-family:sans-serif;font-size:13px;width:100%;cursor:pointer;text-align:left;display:flex;align-items:center;justify-content:space-between}
+    .adm-cal-input:hover{border-color:#e8a020}
+    .adm-cal-input.filled{border-color:rgba(232,160,32,0.4);color:#e8a020}
+    .adm-cal-popup{display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:500;background:#0d1b3e;border:0.5px solid rgba(232,160,32,0.3);border-radius:4px;padding:16px;width:260px;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+    .adm-cal-popup.open{display:block}
+    .adm-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .adm-cal-nav span{font-family:sans-serif;font-size:13px;color:#fff}
+    .adm-cal-nav button{background:none;border:0.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:3px 8px;cursor:pointer;border-radius:2px;font-size:14px}
+    .adm-cal-nav button:hover{border-color:#e8a020;color:#e8a020}
+    .adm-cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+    .adm-cal-dname{font-family:sans-serif;font-size:9px;color:rgba(255,255,255,0.25);padding:3px 0;text-transform:uppercase}
+    .adm-cal-day{padding:6px 2px;font-family:sans-serif;font-size:12px;color:rgba(255,255,255,0.6);cursor:pointer;border-radius:2px;transition:all .1s}
+    .adm-cal-day:hover:not(.adm-occ):not(.adm-empty):not(.adm-past){background:rgba(232,160,32,0.2);color:#e8a020}
+    .adm-cal-day.adm-occ{background:rgba(91,158,225,0.1);color:rgba(91,158,225,0.3);cursor:not-allowed;font-size:9px}
+    .adm-cal-day.adm-past{opacity:0.2;cursor:not-allowed}
+    .adm-cal-day.adm-sel{background:#e8a020;color:#0d1b3e;font-weight:bold}
+    .adm-cal-day.adm-today{border:0.5px solid rgba(232,160,32,0.5)}
+    .adm-cal-day.adm-empty{opacity:0;pointer-events:none}
+
     /* PREÇOS PERÍODO */
     .periodo-item{background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
     .periodo-info{flex:1}
@@ -558,8 +580,26 @@
           <div class="form-group"><label></label></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Check-in *</label><input type="date" id="nIn"></div>
-          <div class="form-group"><label>Check-out *</label><input type="date" id="nOut"></div>
+          <div class="form-group">
+            <label>Check-in *</label>
+            <div class="adm-cal-wrap">
+              <div class="adm-cal-input" id="nInDisplay" onclick="abrirAdmCal('nIn','nInDisplay','nInPop')">
+                <span id="nInLabel">Selecionar data</span> <span style="opacity:.4">▼</span>
+              </div>
+              <input type="hidden" id="nIn">
+              <div class="adm-cal-popup" id="nInPop"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Check-out *</label>
+            <div class="adm-cal-wrap">
+              <div class="adm-cal-input" id="nOutDisplay" onclick="abrirAdmCal('nOut','nOutDisplay','nOutPop')">
+                <span id="nOutLabel">Selecionar data</span> <span style="opacity:.4">▼</span>
+              </div>
+              <input type="hidden" id="nOut">
+              <div class="adm-cal-popup" id="nOutPop"></div>
+            </div>
+          </div>
         </div>
         <div class="form-group" style="margin-bottom:0"><label>Observações</label><textarea id="nObs" placeholder="Ex: pagamento antecipado, chave com vizinho..."></textarea></div>
         <button class="save-btn" onclick="salvarReserva()">💾 Salvar reserva</button>
@@ -722,8 +762,26 @@
       <div class="form-group"><label>Observações</label><textarea id="eObs" placeholder="Ex: pagamento antecipado..." style="min-height:42px"></textarea></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Check-in *</label><input type="date" id="eIn"></div>
-      <div class="form-group"><label>Check-out *</label><input type="date" id="eOut"></div>
+      <div class="form-group">
+        <label>Check-in *</label>
+        <div class="adm-cal-wrap">
+          <div class="adm-cal-input" id="eInDisplay" onclick="abrirAdmCal('eIn','eInDisplay','eInPop')">
+            <span id="eInLabel">Selecionar data</span> <span style="opacity:.4">▼</span>
+          </div>
+          <input type="hidden" id="eIn">
+          <div class="adm-cal-popup" id="eInPop"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Check-out *</label>
+        <div class="adm-cal-wrap">
+          <div class="adm-cal-input" id="eOutDisplay" onclick="abrirAdmCal('eOut','eOutDisplay','eOutPop')">
+            <span id="eOutLabel">Selecionar data</span> <span style="opacity:.4">▼</span>
+          </div>
+          <input type="hidden" id="eOut">
+          <div class="adm-cal-popup" id="eOutPop"></div>
+        </div>
+      </div>
     </div>
     <div class="msg-err" id="editErr" style="margin-top:12px"></div>
     <button class="update-btn" onclick="salvarEdicao()">💾 Salvar alterações</button>
@@ -1229,6 +1287,130 @@ async function delPeriodo(id) {
   } catch(e) { alert('Erro ao remover.'); }
 }
 
+
+// ── CALENDÁRIO ADMIN (com datas bloqueadas) ───────────────────────────────────
+const mesesAdm = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let admCalState = {}; // { fieldId, displayId, popId, year, month }
+
+function abrirAdmCal(fieldId, displayId, popId) {
+  // Fechar outros popups abertos
+  document.querySelectorAll('.adm-cal-popup.open').forEach(p => {
+    if (p.id !== popId) p.classList.remove('open');
+  });
+  const pop = document.getElementById(popId);
+  if (pop.classList.contains('open')) { pop.classList.remove('open'); return; }
+
+  // Iniciar estado
+  const hoje = new Date();
+  const valAtual = document.getElementById(fieldId).value;
+  let year = hoje.getFullYear(), month = hoje.getMonth();
+  if (valAtual) { const p = valAtual.split('-'); year = +p[0]; month = +p[1]-1; }
+
+  admCalState[popId] = { fieldId, displayId, popId, year, month };
+  renderAdmCal(popId);
+  pop.classList.add('open');
+
+  // Fechar ao clicar fora
+  setTimeout(() => {
+    document.addEventListener('click', function handler(e) {
+      if (!pop.contains(e.target) && e.target.id !== displayId && !e.target.closest('#'+displayId)) {
+        pop.classList.remove('open');
+        document.removeEventListener('click', handler);
+      }
+    });
+  }, 10);
+}
+
+function renderAdmCal(popId) {
+  const st = admCalState[popId];
+  if (!st) return;
+  const { year, month, fieldId } = st;
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const first = new Date(year, month, 1).getDay();
+  const days  = new Date(year, month+1, 0).getDate();
+  const valAtual = document.getElementById(fieldId).value;
+
+  let html = `<div class="adm-cal-nav">
+    <button onclick="admCalNav('${popId}',-1)">‹</button>
+    <span>${mesesAdm[month]} ${year}</span>
+    <button onclick="admCalNav('${popId}',1)">›</button>
+  </div>
+  <div class="adm-cal-days">
+    <div class="adm-cal-dname">D</div><div class="adm-cal-dname">S</div><div class="adm-cal-dname">T</div>
+    <div class="adm-cal-dname">Q</div><div class="adm-cal-dname">Q</div><div class="adm-cal-dname">S</div>
+    <div class="adm-cal-dname">S</div>`;
+
+  for (let i = 0; i < first; i++) html += '<div class="adm-cal-day adm-empty"></div>';
+
+  for (let d = 1; d <= days; d++) {
+    const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dt = new Date(year, month, d);
+    const occ = datasOcupadas.includes(ds);
+    const past = dt < hoje;
+    const tod  = dt.getTime() === hoje.getTime();
+    const sel  = ds === valAtual;
+    let cls = 'adm-cal-day';
+    if (occ)  cls += ' adm-occ';
+    else if (past) cls += ' adm-past';
+    else if (sel)  cls += ' adm-sel';
+    if (tod)  cls += ' adm-today';
+    const label = occ ? 'Res.' : d;
+    const click = (occ || past) ? '' : `onclick="selecionarAdmData('${popId}','${ds}')"`;
+    html += `<div class="${cls}" ${click}>${label}</div>`;
+  }
+  html += '</div>';
+  document.getElementById(popId).innerHTML = html;
+}
+
+function admCalNav(popId, dir) {
+  const st = admCalState[popId];
+  st.month += dir;
+  if (st.month > 11) { st.month = 0; st.year++; }
+  if (st.month < 0)  { st.month = 11; st.year--; }
+  renderAdmCal(popId);
+}
+
+function selecionarAdmData(popId, ds) {
+  const st = admCalState[popId];
+  // Salvar no hidden input
+  document.getElementById(st.fieldId).value = ds;
+  // Atualizar display
+  const p = ds.split('-');
+  const label = `${p[2]}/${p[1]}/${p[0]}`;
+  const disp = document.getElementById(st.displayId);
+  disp.querySelector('span:first-child').textContent = label;
+  disp.classList.add('filled');
+  // Fechar popup
+  document.getElementById(popId).classList.remove('open');
+  // Atualizar label do outro ID relacionado (nInLabel / eInLabel etc)
+  const labelEl = document.getElementById(st.fieldId + 'Label');
+  if (labelEl) labelEl.textContent = label;
+}
+
+function setAdmCalDate(fieldId, displayId, ds) {
+  // Preencher programaticamente (usado ao abrir edição)
+  if (!ds) return;
+  document.getElementById(fieldId).value = ds;
+  const p = ds.split('-');
+  const label = `${p[2]}/${p[1]}/${p[0]}`;
+  const disp = document.getElementById(displayId);
+  if (disp) {
+    disp.querySelector('span:first-child').textContent = label;
+    disp.classList.add('filled');
+  }
+  const labelEl = document.getElementById(fieldId + 'Label');
+  if (labelEl) labelEl.textContent = label;
+}
+
+function limparAdmCal(fieldId, displayId) {
+  document.getElementById(fieldId).value = '';
+  const disp = document.getElementById(displayId);
+  if (disp) {
+    disp.querySelector('span:first-child').textContent = 'Selecionar data';
+    disp.classList.remove('filled');
+  }
+}
+
 // ── FICHA DE RESERVA ─────────────────────────────────────────────────────────
 function abrirFichaReserva() {
   if (!s1 || !s2) return;
@@ -1432,7 +1614,8 @@ async function salvarReserva(){
   if(!nome||!checkin||!checkout){errEl.textContent='Preencha nome, check-in e check-out.';errEl.classList.add('show');return;}
   try{
     const r=await fetch(API+'/api/admin/reservas',{method:'POST',headers:{'Content-Type':'application/json',...admHeaders},body:JSON.stringify({nome,cpf:document.getElementById('nCpf').value,wpp:document.getElementById('nWpp').value,checkin,checkout,valor:document.getElementById('nValor').value||0,sinal:document.getElementById('nSinal').value||0,obs:document.getElementById('nObs').value})});
-    if(r.ok){ ['nNome','nCpf','nWpp','nValor','nSinal','nIn','nOut','nObs'].forEach(id=>document.getElementById(id).value=''); await carregarDatas(); render(); switchTab('reservas'); const ok=document.getElementById('msgResOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
+    if(r.ok){ ['nNome','nCpf','nWpp','nValor','nSinal','nIn','nOut','nObs'].forEach(id=>document.getElementById(id).value='');
+              limparAdmCal('nIn','nInDisplay'); limparAdmCal('nOut','nOutDisplay'); await carregarDatas(); render(); switchTab('reservas'); const ok=document.getElementById('msgResOk'); ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'),3000); }
     else{ const d=await r.json(); errEl.textContent=d.error||'Erro ao salvar.'; errEl.classList.add('show'); }
   }catch(e){ errEl.textContent='Erro de conexão.'; errEl.classList.add('show'); }
 }
@@ -1510,8 +1693,8 @@ function abrirEdicao(res) {
   document.getElementById('eValor').value    = res.valor || '';
   document.getElementById('eSinal').value    = res.sinal || '';
   atualizarHintSinal('eSinal','eSinalHint', res.valor||0, res.sinal||0);
-  document.getElementById('eIn').value       = res.checkin  || '';
-  document.getElementById('eOut').value      = res.checkout || '';
+  setAdmCalDate('eIn','eInDisplay', res.checkin || '');
+  setAdmCalDate('eOut','eOutDisplay', res.checkout || '');
   document.getElementById('eObs').value      = res.obs  || '';
   document.getElementById('editErr').classList.remove('show');
   document.getElementById('editOverlay').classList.add('open');
